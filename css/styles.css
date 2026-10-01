@@ -1203,7 +1203,7 @@ img.is-missing {
 @supports (grid-template-rows: subgrid) {
   .step {
     display: grid;
-    grid-row: span 4;
+    grid-row: span 3; /* image, title, text */
     grid-template-rows: subgrid;
     row-gap: 8px;
   }
@@ -1220,8 +1220,15 @@ img.is-missing {
   height: 100%;
   object-fit: cover;
 }
-.step .kicker {
-  margin-bottom: 4px;
+/* Step number before the title; a wrapped title lines up with its own text, not under the number */
+.step .card-title {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+.step__num {
+  flex: none;
+  color: var(--amber);
 }
 
 .situation {
@@ -2162,7 +2169,7 @@ img.is-missing {
 }
 
 /* =========================================================
-   17. FAQ accordions (brief FAQ section; the tabbed legacy FAQ is hidden)
+   17. FAQ: spec "FAQ Labeled Tabs", each panel a list of .faq-item accordions
    ========================================================= */
 .faq {
   display: flex;
@@ -2171,23 +2178,9 @@ img.is-missing {
   max-width: 900px;
   margin-inline: auto;
 }
-/* Spec "Label" grouping a run of questions (custodians, monitoring, beneficiaries) */
-.faq-group {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-top: 28px;
-}
-.faq-group__label {
-  margin-bottom: 4px;
-  font: 600 12px/1.4 var(--font-ui);
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--amber);
-}
 .faq .tabs {
   justify-content: center;
-  margin-bottom: 44px;
+  margin-bottom: 28px;
 }
 @media (max-width: 640px) {
   .faq .tabs {
@@ -2198,6 +2191,9 @@ img.is-missing {
   display: flex;
   flex-direction: column;
   gap: 12px;
+}
+.faq__panel:focus-visible {
+  outline-offset: 6px;
 }
 .faq-item {
   background: #fff;

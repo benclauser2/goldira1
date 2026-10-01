@@ -480,14 +480,37 @@
 
   /* ---------- FAQ tabs ---------- */
   function initFaq() {
-    const tablist = $('#faq-tabs');
-    if (!tablist) return;
-    initTablist(tablist, (selected, tabs) => {
+    const tablists = $$('.faq [role="tablist"]');
+    if (!tablists.length) return;
+    tablists.forEach((tablist) => initTablist(tablist, (selected, tabs) => {
       tabs.forEach((tab) => {
         const panel = document.getElementById(tab.getAttribute('aria-controls'));
         if (panel) panel.hidden = tab !== selected;
       });
+    }));
+
+    // Links to a tab panel or a question (nav, footer, a shared #hash URL) open its tab and expand its accordion
+    const revealTarget = (hash) => {
+      const target = hash.length > 1 ? document.getElementById(decodeURIComponent(hash.slice(1))) : null;
+      if (!target) return null;
+      const panel = target.closest('[role="tabpanel"]');
+      const accordion = target.closest('details');
+      const needsTab = Boolean(panel?.hidden);
+      const needsOpen = Boolean(accordion && !accordion.open);
+      if (!needsTab && !needsOpen) return null;
+      if (needsTab) $(`[role="tab"][aria-controls="${panel.id}"]`)?.click();
+      if (needsOpen) accordion.open = true;
+      return target;
+    };
+    document.addEventListener('click', (e) => {
+      const link = e.target.closest('a[href^="#"]');
+      if (link) revealTarget(link.getAttribute('href'));  // the link's own navigation then scrolls to it
     });
+    window.addEventListener('hashchange', () => revealTarget(location.hash)?.scrollIntoView());
+    // Arriving on a #hash URL: jump (not glide) once layout has settled, as the browser would for a visible target
+    const onArrival = () => revealTarget(location.hash)?.scrollIntoView({ behavior: 'instant' });
+    if (document.readyState === 'complete') onArrival();
+    else window.addEventListener('load', onArrival, { once: true });
   }
 
   /* ---------- Policy dialog ---------- */

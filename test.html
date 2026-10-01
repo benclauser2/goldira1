@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Funding and Understanding a Gold IRA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F7F4EA;
+    --paper-raised:#FCFAF3;
+    --ink:#242821;
+    --ink-soft:#565B4E;
+    --green:#2E4536;
+    --green-deep:#20321F;
+    --gold:#A9843C;
+    --gold-bright:#C79A46;
+    --rule:#DED2AE;
+    --rule-soft:#E9E1C7;
+    font-family: 'Source Sans 3', system-ui, -apple-system, sans-serif;
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior:smooth; }
+
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .serif{ font-family:'Fraunces', Georgia, serif; }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    background:
+      radial-gradient(120% 160% at 85% -20%, #33503C 0%, var(--green-deep) 55%, #182518 100%);
+    color:#EFE9D6;
+    padding: 96px 28px 84px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero::after{
+    content:"";
+    position:absolute;
+    left:-120px; top:-140px;
+    width:420px; height:420px;
+    border-radius:50%;
+    border:1px solid rgba(199,154,70,0.28);
+  }
+  .hero::before{
+    content:"";
+    position:absolute;
+    left:-40px; top:-60px;
+    width:260px; height:260px;
+    border-radius:50%;
+    border:1px solid rgba(199,154,70,0.22);
+  }
+  .hero-inner{
+    max-width:720px;
+    margin:0 auto;
+    position:relative;
+  }
+  .mark{
+    width:40px; height:40px;
+    border:1px solid var(--gold-bright);
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    margin-bottom:34px;
+  }
+  .mark span{
+    width:10px; height:10px;
+    background:var(--gold-bright);
+    border-radius:50%;
+    display:block;
+  }
+  .hero h1{
+    font-size: clamp(2.3rem, 5vw, 3.4rem);
+    font-weight:500;
+    line-height:1.12;
+    margin:0 0 22px;
+    letter-spacing:-0.01em;
+  }
+  .hero p{
+    font-size:1.15rem;
+    line-height:1.65;
+    color:#D9D2B9;
+    max-width:34em;
+    margin:0;
+  }
+
+  /* ---------- LAYOUT ---------- */
+  main{
+    max-width:760px;
+    margin:0 auto;
+    padding: 64px 28px 100px;
+  }
+
+  .lede{
+    font-family:'Fraunces', Georgia, serif;
+    font-size:1.3rem;
+    line-height:1.6;
+    color:var(--green-deep);
+    font-weight:400;
+    font-style:italic;
+    border-left:2px solid var(--gold);
+    padding-left:22px;
+    margin: 0 0 72px;
+  }
+
+  h2{
+    font-family:'Fraunces', Georgia, serif;
+    font-weight:500;
+    font-size:2rem;
+    color:var(--green-deep);
+    line-height:1.25;
+    margin: 0 0 8px;
+  }
+
+  .section-intro{
+    color:var(--ink-soft);
+    font-size:1.05rem;
+    line-height:1.7;
+    max-width:34em;
+    margin: 0 0 40px;
+  }
+
+  section.block{ margin-bottom:96px; }
+  section.block:last-child{ margin-bottom:40px; }
+
+  /* ---------- Ledger rows (funding methods, section 1) ---------- */
+  .ledger{ border-top:1px solid var(--rule); }
+  .row{
+    padding: 30px 0;
+    border-bottom:1px solid var(--rule);
+  }
+  .row h3{
+    font-family:'Fraunces', Georgia, serif;
+    font-style:italic;
+    font-weight:500;
+    font-size:1.2rem;
+    color:var(--gold);
+    line-height:1.4;
+    margin:0 0 12px;
+  }
+  .row .answer p{
+    margin:0 0 12px;
+    line-height:1.7;
+    color:var(--ink);
+    font-size:1.02rem;
+    max-width:38em;
+  }
+  .row .answer p:last-child{ margin-bottom:0; }
+
+  .sub{
+    margin-top:20px;
+    padding-left:22px;
+    border-left:2px solid var(--rule-soft);
+  }
+  .sub h4{
+    font-family:'Fraunces', Georgia, serif;
+    font-weight:500;
+    font-style:italic;
+    font-size:1rem;
+    color:var(--green);
+    margin:0 0 8px;
+  }
+  .sub p{
+    margin:0;
+    line-height:1.7;
+    color:var(--ink-soft);
+    font-size:0.98rem;
+    max-width:36em;
+  }
+
+  /* ---------- Index grid (knowledge topics, section 2) ---------- */
+  .grid{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    border-top:1px solid var(--rule);
+    border-left:1px solid var(--rule);
+  }
+  .cell{
+    padding: 28px 26px;
+    border-right:1px solid var(--rule);
+    border-bottom:1px solid var(--rule);
+  }
+  .cell:nth-child(5){
+    grid-column: 1 / -1;
+    background:var(--paper-raised);
+  }
+  .cell .tag{
+    display:inline-block;
+    font-size:0.75rem;
+    letter-spacing:0.02em;
+    color:var(--gold);
+    font-family:'Fraunces', Georgia, serif;
+    font-style:italic;
+    margin-bottom:10px;
+  }
+  .cell h3{
+    font-family:'Fraunces', Georgia, serif;
+    font-weight:500;
+    font-size:1.12rem;
+    color:var(--green-deep);
+    line-height:1.35;
+    margin:0 0 10px;
+  }
+  .cell p{
+    margin:0;
+    line-height:1.65;
+    color:var(--ink-soft);
+    font-size:0.98rem;
+  }
+
+  /* ---------- callout ---------- */
+  .callout{
+    margin-top:56px;
+    background:var(--paper-raised);
+    border:1px solid var(--rule-soft);
+    border-left:3px solid var(--green);
+    padding: 26px 30px;
+  }
+  .callout p{
+    margin:0;
+    line-height:1.7;
+    color:var(--ink);
+    font-size:1rem;
+  }
+  .callout .label{
+    font-family:'Fraunces', Georgia, serif;
+    font-style:italic;
+    color:var(--green);
+    font-size:1rem;
+    margin:0 0 8px;
+  }
+
+  footer{
+    max-width:760px;
+    margin:0 auto;
+    padding: 0 28px 80px;
+    color:var(--ink-soft);
+    font-size:0.9rem;
+    line-height:1.7;
+    border-top:1px solid var(--rule);
+    padding-top:28px;
+  }
+
+  @media (max-width: 620px){
+    .hero{ padding:72px 22px 64px; }
+    main{ padding:48px 22px 72px; }
+    .lede{ font-size:1.15rem; }
+    .grid{ grid-template-columns: 1fr; }
+    .cell:nth-child(5){ grid-column:auto; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="mark"><span></span></div>
+    <h1>Funding and Understanding a Gold IRA</h1>
+    <p>Where the money to open a gold IRA actually comes from, and what happens to that money for the rest of the account's life — from first deposit to final distribution.</p>
+  </div>
+</div>
+
+<main>
+
+  <p class="lede">A gold IRA can't be funded with a simple deposit slip. The path money takes into the account — and later, out of it — is governed by a specific set of rules worth knowing before you start.</p>
+
+  <section class="block" id="funding">
+    <h2>How Can You Fund a Gold IRA?</h2>
+    <p class="section-intro">There are three common entry points for money heading into a gold IRA, each moving differently and carrying its own paperwork.</p>
+
+    <div class="ledger">
+      <div class="row">
+        <h3>How Does a Gold IRA Rollover Work?</h3>
+        <div class="answer">
+          <p>A rollover moves funds from an existing retirement account into a new gold IRA, custodian to custodian, without the money ever passing through the account holder's own bank account. Handled correctly, it's a non-taxable event — the balance simply changes address.</p>
+        </div>
+      </div>
+
+      <div class="row">
+        <h3>Can You Transfer Funds From Another Retirement Account?</h3>
+        <div class="answer">
+          <p>Yes — a direct transfer works similarly to a rollover but is typically used between accounts of the same type, such as one traditional IRA to another. Because the funds move directly between custodians, there's no 60-day window to worry about and no withholding is triggered.</p>
+        </div>
+      </div>
+
+      <div class="row">
+        <h3>What Contribution Limits Apply to a Gold IRA?</h3>
+        <div class="answer">
+          <p>A gold IRA follows the same annual contribution ceiling as any other IRA of its type, set each year by the IRS and adjusted periodically for inflation. Rollovers and transfers don't count against that cap — only new, out-of-pocket contributions do.</p>
+        </div>
+        <div class="sub">
+          <h4>Can You Move Money From a 401(k) Into a Gold IRA?</h4>
+          <p>In most cases, yes. Funds from a former employer's 401(k) can generally be rolled into a gold IRA once you've left that job, and some plans allow an in-service rollover even while you're still employed — though plan rules vary, so it's worth checking with the plan administrator first.</p>
+        </div>
+      </div>
+
+      <div class="row">
+        <h3>What Gold IRA Rules Apply to Account Funding?</h3>
+        <div class="answer">
+          <p>Every dollar has to move through the custodian rather than the account holder, purchases must be made through an approved dealer, and the resulting metal has to meet IRS purity standards before it can sit in the account. Skipping any of these steps can jeopardize the account's tax-advantaged status.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="know">
+    <h2>What Should You Know About Gold IRA Money?</h2>
+    <p class="section-intro">Once the account is funded, five things largely determine how that money behaves over time.</p>
+
+    <div class="grid">
+      <div class="cell">
+        <span class="tag">Value</span>
+        <h3>What Factors Can Affect Gold IRA Value?</h3>
+        <p>Spot price swings, currency strength, interest rates, and broader demand for safe-haven assets all move the value of the metal sitting in the account — often independently of how the stock market is doing.</p>
+      </div>
+      <div class="cell">
+        <span class="tag">Fees</span>
+        <h3>What Fees Can Reduce Gold IRA Funds?</h3>
+        <p>Setup charges, annual custodian fees, storage costs, and dealer markups on each purchase all chip away at returns. Because they're often flat rather than percentage-based, they matter more on smaller balances.</p>
+      </div>
+      <div class="cell">
+        <span class="tag">Distributions</span>
+        <h3>How Are Gold IRA Distributions Handled?</h3>
+        <p>Account holders can typically take a distribution either as cash — after the custodian sells the metal — or, in some accounts, as the physical metal itself, shipped directly to them.</p>
+      </div>
+      <div class="cell">
+        <span class="tag">Taxes</span>
+        <h3>What Tax Rules Apply to Gold IRA Distributions?</h3>
+        <p>Distributions are generally taxed the same way as any other IRA of the same type — as ordinary income for a traditional account, or tax-free for a qualified Roth withdrawal — with early withdrawals before retirement age usually facing an additional penalty.</p>
+      </div>
+      <div class="cell">
+        <span class="tag">Retirement</span>
+        <h3>What Happens to a Gold IRA After the Owner Retires?</h3>
+        <p>The account keeps functioning as it did before — the metal stays in storage, still tracked against spot price — except withdrawals can now be taken freely, and required minimum distributions begin to apply once the account holder reaches the age set by current IRS rules.</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <p class="label">Worth remembering</p>
+      <p>Funding a gold IRA correctly is what keeps it tax-advantaged; everything downstream — value, fees, and how the money eventually comes back out — depends on that first step being done right.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  This overview is educational and general in nature. Contribution limits, distribution ages, and tax treatment are set by the IRS and can change — confirm current figures with a qualified custodian or tax advisor before making decisions.
+</footer>
+
+</body>
+</html>
+
