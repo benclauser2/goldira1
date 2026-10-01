@@ -183,12 +183,9 @@ button {
 .section-head--sub {
   margin-top: clamp(56px, 7vw, 88px);
 }
-/* Long paragraph copy: wider block, left-aligned under the centered heading */
+/* Long paragraph copy: a wider block (centered like every other section head) */
 .section-head--prose {
   max-width: 900px;
-}
-.section-head--prose .section-lede {
-  text-align: start;
 }
 .section-head__rule {
   width: 48px;
@@ -386,7 +383,9 @@ button {
 /* Read more */
 .read-more {
   display: inline-flex;
+  align-items: center;
   gap: 6px;
+  min-height: 24px; /* tap target */
   padding: 0;
   background: none;
   border: 0;
@@ -398,6 +397,10 @@ button {
 .read-more:hover {
   text-decoration: underline;
   text-underline-offset: 3px;
+}
+/* Gold on dark backgrounds: amber is too low-contrast for 10.5px text there */
+.read-more--on-dark {
+  color: var(--gold);
 }
 .clamp {
   display: -webkit-box;
@@ -586,7 +589,8 @@ img.is-missing {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 27px;
+  --copy-gap: 27px;
+  gap: var(--copy-gap);
   max-width: 580px;
 }
 .hero__eyebrow {
@@ -611,6 +615,13 @@ img.is-missing {
 .hero__lede {
   font: 400 18px/1.7 var(--font-ui);
   color: rgba(255, 255, 255, 0.78);
+}
+.hero__lede.clamp {
+  --lines: 4;
+}
+/* Sit the toggle just under the clamped text rather than a full flex gap away */
+.hero__copy .read-more {
+  margin-top: calc(9px - var(--copy-gap));
 }
 
 .hero__points {
@@ -751,6 +762,80 @@ img.is-missing {
   }
 }
 
+/* Short desktop/laptop screens: tighten spacing and type so the whole hero
+   (copy, calculator, stats) fits the first screen. Spacing scales with height. */
+@media (min-width: 1025px) and (max-height: 1000px) {
+  .hero {
+    padding-top: calc(var(--header-h) + clamp(12px, 3vh, 40px));
+  }
+  .hero__main {
+    padding-bottom: clamp(16px, 3vh, 40px);
+  }
+  .hero__copy {
+    --copy-gap: clamp(12px, 2vh, 22px);
+  }
+  .hero__title {
+    font-size: clamp(40px, 7vh, 62px);
+  }
+  .hero__lede {
+    font-size: 17px;
+    line-height: 1.6;
+  }
+  .hero__lede.clamp {
+    --lines: 3;
+  }
+  .hero__points {
+    gap: 12px;
+  }
+  .hero__point-title {
+    margin-bottom: 2px;
+    font-size: 17px;
+  }
+  .hero__point-text {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .hero__stats {
+    padding: 14px 0 clamp(14px, 2.5vh, 32px);
+  }
+  .calc {
+    gap: 14px;
+    width: 440px;
+    padding: 24px 28px 20px;
+  }
+  .calc__title {
+    font-size: 21px;
+  }
+  .calc__field {
+    row-gap: 6px;
+  }
+  .calc__result {
+    padding: 12px 16px;
+  }
+  .calc__balance {
+    margin-block: 2px;
+    font-size: 30px;
+  }
+  .calc__disclaimer {
+    font-size: 11px;
+    line-height: 1.45;
+  }
+}
+/* Very short screens (e.g. laptops with browser toolbars): intro to 2 lines (Read more reveals the rest)
+   and a tighter calculator, which is the taller column at this size */
+@media (min-width: 1025px) and (max-height: 680px) {
+  .hero__lede.clamp {
+    --lines: 2;
+  }
+  .calc {
+    gap: 10px;
+    padding: 20px 24px 16px;
+  }
+  .calc__balance {
+    font-size: 26px;
+  }
+}
+
 /* =========================================================
    6. Reviews: rating summary, collapsible filter, carousel
    ========================================================= */
@@ -785,7 +870,7 @@ img.is-missing {
   color: var(--text-2);
 }
 
-/* Collapsible category filter */
+/* Category filter (always visible) */
 .review-filter {
   max-width: 900px;
   margin-inline: auto;
@@ -794,33 +879,18 @@ img.is-missing {
   border-radius: var(--radius-lg);
   box-shadow: 0 1px 3px rgba(37, 67, 108, 0.08);
 }
-.review-filter__toggle {
+.review-filter__title {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  padding: 18px 24px;
+  padding: 18px 24px 14px;
   font: 500 18px/1.3 var(--font-display);
   color: var(--navy);
-  list-style: none;
-  cursor: pointer;
 }
-.review-filter__toggle::-webkit-details-marker {
-  display: none;
-}
-.review-filter__toggle:focus-visible {
-  outline-offset: -3px;
-}
-.review-filter__toggle .icon {
+.review-filter__title .icon {
   width: 18px;
   height: 18px;
-}
-.review-filter__chevron {
-  transform: rotate(90deg);
-  transition: transform 0.2s ease;
-}
-.review-filter[open] .review-filter__chevron {
-  transform: rotate(-90deg);
 }
 .review-filter__chips {
   display: flex;
@@ -869,6 +939,7 @@ img.is-missing {
 .carousel__track {
   position: relative;
   display: flex;
+  align-items: flex-start; /* cards size to their own text, not the longest review in the set */
   gap: var(--carousel-gap);
   padding: 4px 2px 8px;
   overflow-x: auto;
@@ -943,6 +1014,15 @@ img.is-missing {
     width 0.2s ease,
     background-color 0.2s ease;
 }
+/* Replaces the dots when there are too many pages for them */
+.carousel__counter {
+  margin-top: 16px;
+  text-align: center;
+  font: 600 13px/1.4 var(--font-ui);
+  letter-spacing: 0.08em;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-2);
+}
 .carousel__dot[aria-current="true"]::before {
   width: 24px;
   background: var(--blue);
@@ -965,6 +1045,9 @@ img.is-missing {
   display: flex;
   gap: 4px;
   color: var(--amber);
+}
+.review__stars .icon.is-empty {
+  fill: none;
 }
 .review__stars .icon {
   width: 18px;
@@ -989,7 +1072,7 @@ img.is-missing {
   padding-top: 16px;
   border-top: 1px solid var(--rule);
 }
-/* Works for both the placeholder <span> and a real <img> */
+/* Reviewer's initial; also works as a real <img> if photos are added later */
 .review__avatar {
   display: grid;
   place-items: center;
@@ -997,15 +1080,10 @@ img.is-missing {
   height: 48px;
   flex: none;
   border-radius: 50%;
-  background: var(--surface-2);
-  border: 1px solid var(--rule-strong);
-  color: var(--muted);
+  background: var(--navy);
+  font: 600 18px/1 var(--font-ui);
+  color: #fff;
   object-fit: cover;
-}
-.review__avatar .icon {
-  width: 24px;
-  height: 24px;
-  stroke-width: 1.5;
 }
 .review__who {
   display: flex;
@@ -1028,6 +1106,20 @@ img.is-missing {
   }
 }
 @media (max-width: 640px) {
+  /* Chips become one swipeable row so the always-visible filter stays compact */
+  .review-filter__chips {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding-inline: 16px;
+  }
+  .review-filter__chips::-webkit-scrollbar {
+    display: none;
+  }
+  .chip {
+    flex: none;
+  }
   /* One card with a peek of the next; swipe to browse */
   .carousel {
     --per-view: 1.12;
@@ -2070,11 +2162,28 @@ img.is-missing {
 }
 
 /* =========================================================
-   17. FAQ
+   17. FAQ accordions (brief FAQ section; the tabbed legacy FAQ is hidden)
    ========================================================= */
 .faq {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
   max-width: 900px;
   margin-inline: auto;
+}
+/* Spec "Label" grouping a run of questions (custodians, monitoring, beneficiaries) */
+.faq-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 28px;
+}
+.faq-group__label {
+  margin-bottom: 4px;
+  font: 600 12px/1.4 var(--font-ui);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--amber);
 }
 .faq .tabs {
   justify-content: center;
@@ -2144,9 +2253,20 @@ img.is-missing {
   color: var(--navy);
 }
 .faq-item__a {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
   padding: 0 24px 24px 66px;
   font: 400 17px/1.7 var(--font-body);
   color: var(--text);
+}
+/* Lists inside an answer: the flex gap handles spacing, and item titles stay smaller than the question */
+.faq-item__a .block-note {
+  margin: 0;
+}
+.faq-item__a .step-list__title,
+.faq-item__a .fact-list dt {
+  font-size: 17px;
 }
 @media (max-width: 560px) {
   .faq-item summary {

@@ -23,7 +23,8 @@
   const HEADER_SOLID_OFFSET = 40; // px scrolled before the header gets its solid background
   const DESKTOP_NAV_QUERY = '(min-width: 901px)'; // keep in sync with the 900px nav breakpoint in styles.css
   const RESIZE_DEBOUNCE_MS = 150;
-  const CAROUSEL_MAX_DOTS = 10; // beyond this, dots are noise; arrows and swipe still work
+  const CAROUSEL_MAX_DOTS = 10; // beyond this, dots are noise; a "3 / 59" counter replaces them
+  const SCROLL_SETTLE_MS = 120; // scroll counts as finished after this long without a scroll event
 
   /* ---------- Header: solid after scrolling, mobile menu ---------- */
   function initHeader() {
@@ -288,6 +289,28 @@
   }
 
   /* ---------- Reviews: rating summary, category filter, carousel ---------- */
+  // One card per review in REVIEWS (js/reviews.js), cloned from <template id="review-template">.
+  // Text goes in via textContent only, so review copy can never inject markup.
+  function renderReviewCards(track, template, reviews) {
+    const cards = reviews.map((review) => {
+      const card = template.content.firstElementChild.cloneNode(true);
+      const rating = Math.min(Math.max(Math.round(Number(review.rating)) || 0, 0), 5);
+      card.dataset.category = review.category;
+      card.dataset.rating = rating;
+      const stars = $('.review__stars', card);
+      stars.setAttribute('aria-label', `${rating} out of 5 stars`);
+      $$('.icon', stars).forEach((star, i) => star.classList.toggle('is-empty', i >= rating));
+      $('.review__title', card).textContent = review.title;
+      $('.review__quote p', card).textContent = review.text;
+      $('.review__avatar', card).textContent = review.author.trim().charAt(0);
+      $('.review__name', card).textContent = review.author;
+      $('.review__meta', card).textContent = [review.location, review.age && `Age ${review.age}`].filter(Boolean).join(' · ');
+      return card;
+    });
+    track.replaceChildren(...cards);
+    return cards;
+  }
+
   // Average and count come from the cards' data-rating, so the summary always matches what's published
   function renderRatingSummary(items) {
     const average = $('#reviews-average');
@@ -302,8 +325,9 @@
     total.textContent = ratings.length;
   }
 
-  // Scroll-snap carousel: arrows step a page, dots jump to a page. Returns { reset } for re-layout after filtering.
-  function initCarousel(track, prev, next, dotsEl) {
+  // Scroll-snap carousel: arrows step a page, dots jump to a page (or a "3 / 59" counter when there are
+  // too many pages for dots). Returns { reset } for re-layout after filtering.
+  function initCarousel(track, prev, next, dotsEl, counterEl) {
     if (!prev || !next || !dotsEl) return null;
     let dots = [];
 
@@ -330,12 +354,29 @@
       track.scrollTo({ left: target.offsetLeft - visible[0].offsetLeft, behavior: scrollBehavior() });
     };
 
-    const update = () => {
+    const updateArrows = () => {
       const { overflow, atStart, atEnd } = scrollEdges(track);
       prev.disabled = !overflow || atStart;
-      next.disabled = !overflow || atEnd;
+      // snap points can stop just short of the pixel end, so also check the page index
+      next.disabled = !overflow || atEnd || currentPage() >= pageCount() - 1;
+    };
+    // Page indicators change layout; with mandatory scroll-snap, a layout change mid-scroll makes the
+    // browser re-snap and cancels smooth scrolling, so these only update once scrolling has settled.
+    const updatePage = () => {
       const current = currentPage();
       dots.forEach((dot, i) => dot.setAttribute('aria-current', String(i === current)));
+      const label = `${current + 1} / ${dots.length}`;
+      if (counterEl && counterEl.textContent !== label) counterEl.textContent = label;
+    };
+    const update = () => {
+      updateArrows();
+      updatePage();
+    };
+    let settleTimer;
+    const onScroll = () => {
+      updateArrows();
+      clearTimeout(settleTimer);
+      settleTimer = setTimeout(updatePage, SCROLL_SETTLE_MS);
     };
 
     const renderDots = (force = false) => {
@@ -352,12 +393,13 @@
       });
       dotsEl.replaceChildren(...dots);
       dotsEl.hidden = count <= 1 || count > CAROUSEL_MAX_DOTS;
+      if (counterEl) counterEl.hidden = count <= CAROUSEL_MAX_DOTS;
       update();
     };
 
     prev.addEventListener('click', () => goTo(currentPage() - 1));
     next.addEventListener('click', () => goTo(currentPage() + 1));
-    track.addEventListener('scroll', update, { passive: true });
+    track.addEventListener('scroll', onScroll, { passive: true });
     new ResizeObserver(() => renderDots()).observe(track);
     renderDots(true);
 
@@ -371,13 +413,15 @@
 
   function initReviews() {
     const track = $('#reviews-track');
-    if (!track) return;
-    const items = $$('.reviews__item', track);
+    const template = $('#review-template');
+    const reviews = typeof REVIEWS === 'undefined' ? [] : REVIEWS;
+    if (!track || !template || !reviews.length) return;
+    const items = renderReviewCards(track, template, reviews);
     const chips = $$('.review-filter [data-filter]');
     const status = $('#reviews-status');
 
     renderRatingSummary(items);
-    const carousel = initCarousel(track, $('#reviews-prev'), $('#reviews-next'), $('#reviews-dots'));
+    const carousel = initCarousel(track, $('#reviews-prev'), $('#reviews-next'), $('#reviews-dots'), $('#reviews-counter'));
 
     const matches = (item, filter) => filter === 'all' || item.dataset.category === filter;
 

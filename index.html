@@ -67,9 +67,10 @@
     <section class="hero" id="top" aria-labelledby="hero-title">
       <div class="container hero__container hero__main">
         <div class="hero__copy">
-          <p class="hero__eyebrow">Independent · Fact-checked</p>
+          <!-- <p class="hero__eyebrow">Independent · Fact-checked</p> -->
           <h1 class="hero__title" id="hero-title">Gold IRA Money</h1>
-          <p class="hero__lede">Gold IRA money is retirement funds allocated to physical bullion held in a self-directed, tax-advantaged account rather than to stocks or bonds. Coins and bars must meet IRS purity rules, with gold requiring a minimum fineness of 99.5%, and be stored with an approved custodian and depository rather than at home. Gold often moves differently from stocks, a pattern driving many savers toward the asset to diversify and hedge against inflation. Account structure follows a Traditional or Roth format, an existing IRA or 401(k) eligible for rollover, and contribution limits and rollover rules apply based on the structure chosen.</p>
+          <p class="hero__lede clamp" id="hero-lede">Gold IRA money is retirement funds allocated to physical bullion held in a self-directed, tax-advantaged account rather than to stocks or bonds. Coins and bars must meet IRS purity rules, with gold requiring a minimum fineness of 99.5%, and be stored with an approved custodian and depository rather than at home. Gold often moves differently from stocks, a pattern driving many savers toward the asset to diversify and hedge against inflation. Account structure follows a Traditional or Roth format, an existing IRA or 401(k) eligible for rollover, and contribution limits and rollover rules apply based on the structure chosen.</p>
+          <button class="read-more read-more--on-dark" type="button" data-readmore="hero-lede" aria-controls="hero-lede" aria-expanded="false"><span>Read more</span><span aria-hidden="true">↓</span></button>
           <ul class="hero__points" role="list">
             <li>
               <p class="hero__point-title">Real metal, real ownership</p>
@@ -128,10 +129,8 @@
 
     <!-- ===================== REVIEWS ===================== -->
     <!--
-      TODO: placeholder cards. Replace with real, verifiable customer reviews before launch.
-      One <li class="reviews__item"> per review: data-category must match a filter chip's data-filter,
-      data-rating (1–5) feeds the average shown in the summary. Avatar: swap the <span> for
-      <img class="review__avatar" src="images/review-name.jpg" alt="" width="48" height="48">.
+      Reviews are data in js/reviews.js (copied from goldirablueprint.com/reviews/) and rendered into
+      #reviews-track from <template id="review-template">. Filter chips' data-filter = a review's `category`.
     -->
     <section class="section section--white" id="reviews" aria-labelledby="reviews-title">
       <div class="container">
@@ -143,184 +142,57 @@
           <div class="rating-summary">
             <span class="rating-summary__stars" aria-hidden="true"><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg></span>
             <p><strong class="rating-summary__score" id="reviews-average">5.0 out of 5</strong>
-              <span class="rating-summary__count">Based on <span id="reviews-total">9</span> reviews</span></p>
+              <span class="rating-summary__count">Based on <span id="reviews-total">177</span> reviews</span></p>
           </div>
         </div>
 
-        <details class="review-filter">
-          <summary class="review-filter__toggle">
+        <div class="review-filter" role="group" aria-labelledby="review-filter-title">
+          <p class="review-filter__title" id="review-filter-title">
             <svg class="icon" aria-hidden="true"><use href="#i-filter"/></svg>
             Filter reviews by category
-            <svg class="icon review-filter__chevron" aria-hidden="true"><use href="#i-chevron"/></svg>
-          </summary>
-          <div class="review-filter__chips" role="group" aria-label="Review categories">
+          </p>
+          <div class="review-filter__chips">
             <button class="chip" type="button" data-filter="all" aria-pressed="true">All reviews</button>
             <button class="chip" type="button" data-filter="high-net-worth" aria-pressed="false">High Net Worth</button>
-            <button class="chip" type="button" data-filter="fixed-income" aria-pressed="false">Fixed Income</button>
+            <button class="chip" type="button" data-filter="modest-income" aria-pressed="false">Fixed Income</button>
             <button class="chip" type="button" data-filter="healthcare" aria-pressed="false">Healthcare</button>
-            <button class="chip" type="button" data-filter="military-veterans" aria-pressed="false">Military / Veterans</button>
-            <button class="chip" type="button" data-filter="tradesmen" aria-pressed="false">Tradesmen</button>
-            <button class="chip" type="button" data-filter="professionals" aria-pressed="false">Professionals</button>
-            <button class="chip" type="button" data-filter="previously-skeptical" aria-pressed="false">Previously Skeptical</button>
+            <button class="chip" type="button" data-filter="military" aria-pressed="false">Military / Veterans</button>
+            <button class="chip" type="button" data-filter="blue-collar" aria-pressed="false">Tradesmen</button>
+            <button class="chip" type="button" data-filter="professional" aria-pressed="false">Professionals</button>
+            <button class="chip" type="button" data-filter="skeptical" aria-pressed="false">Previously Skeptical</button>
           </div>
-        </details>
-        <p class="review-filter__status" id="reviews-status" aria-live="polite">Showing 9 of 9 reviews</p>
+        </div>
+        <p class="review-filter__status" id="reviews-status" aria-live="polite">Showing 177 of 177 reviews</p>
 
         <div class="carousel" role="region" aria-roledescription="carousel" aria-label="Customer reviews">
           <button class="carousel__arrow carousel__arrow--prev" type="button" id="reviews-prev" aria-label="Previous reviews">
             <svg class="icon" aria-hidden="true"><use href="#i-chevron"/></svg>
           </button>
-          <ul class="carousel__track reviews" id="reviews-track" role="list" tabindex="0" aria-label="Reviews, scroll horizontally">
-            <li class="reviews__item" data-category="high-net-worth" data-rating="5">
-              <figure class="review">
-                <span class="review__stars" role="img" aria-label="5 out of 5 stars"><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg></span>
-                <p class="review__title">Review title</p>
-                <blockquote class="review__quote">
-                  <p>Placeholder — replace with a real, verified customer review (High Net Worth).</p>
-                </blockquote>
-                <figcaption class="review__author">
-                  <span class="review__avatar" aria-hidden="true"><svg class="icon"><use href="#i-user"/></svg></span>
-                  <span class="review__who">
-                    <span class="review__name">Reviewer name</span>
-                    <span class="review__meta">City, State · Age</span>
-                  </span>
-                </figcaption>
-              </figure>
-            </li>
-            <li class="reviews__item" data-category="fixed-income" data-rating="5">
-              <figure class="review">
-                <span class="review__stars" role="img" aria-label="5 out of 5 stars"><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg></span>
-                <p class="review__title">Review title</p>
-                <blockquote class="review__quote">
-                  <p>Placeholder — replace with a real, verified customer review (Fixed Income).</p>
-                </blockquote>
-                <figcaption class="review__author">
-                  <span class="review__avatar" aria-hidden="true"><svg class="icon"><use href="#i-user"/></svg></span>
-                  <span class="review__who">
-                    <span class="review__name">Reviewer name</span>
-                    <span class="review__meta">City, State · Age</span>
-                  </span>
-                </figcaption>
-              </figure>
-            </li>
-            <li class="reviews__item" data-category="healthcare" data-rating="5">
-              <figure class="review">
-                <span class="review__stars" role="img" aria-label="5 out of 5 stars"><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg></span>
-                <p class="review__title">Review title</p>
-                <blockquote class="review__quote">
-                  <p>Placeholder — replace with a real, verified customer review (Healthcare).</p>
-                </blockquote>
-                <figcaption class="review__author">
-                  <span class="review__avatar" aria-hidden="true"><svg class="icon"><use href="#i-user"/></svg></span>
-                  <span class="review__who">
-                    <span class="review__name">Reviewer name</span>
-                    <span class="review__meta">City, State · Age</span>
-                  </span>
-                </figcaption>
-              </figure>
-            </li>
-            <li class="reviews__item" data-category="military-veterans" data-rating="5">
-              <figure class="review">
-                <span class="review__stars" role="img" aria-label="5 out of 5 stars"><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg></span>
-                <p class="review__title">Review title</p>
-                <blockquote class="review__quote">
-                  <p>Placeholder — replace with a real, verified customer review (Military / Veterans).</p>
-                </blockquote>
-                <figcaption class="review__author">
-                  <span class="review__avatar" aria-hidden="true"><svg class="icon"><use href="#i-user"/></svg></span>
-                  <span class="review__who">
-                    <span class="review__name">Reviewer name</span>
-                    <span class="review__meta">City, State · Age</span>
-                  </span>
-                </figcaption>
-              </figure>
-            </li>
-            <li class="reviews__item" data-category="tradesmen" data-rating="5">
-              <figure class="review">
-                <span class="review__stars" role="img" aria-label="5 out of 5 stars"><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg></span>
-                <p class="review__title">Review title</p>
-                <blockquote class="review__quote">
-                  <p>Placeholder — replace with a real, verified customer review (Tradesmen).</p>
-                </blockquote>
-                <figcaption class="review__author">
-                  <span class="review__avatar" aria-hidden="true"><svg class="icon"><use href="#i-user"/></svg></span>
-                  <span class="review__who">
-                    <span class="review__name">Reviewer name</span>
-                    <span class="review__meta">City, State · Age</span>
-                  </span>
-                </figcaption>
-              </figure>
-            </li>
-            <li class="reviews__item" data-category="professionals" data-rating="5">
-              <figure class="review">
-                <span class="review__stars" role="img" aria-label="5 out of 5 stars"><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg></span>
-                <p class="review__title">Review title</p>
-                <blockquote class="review__quote">
-                  <p>Placeholder — replace with a real, verified customer review (Professionals).</p>
-                </blockquote>
-                <figcaption class="review__author">
-                  <span class="review__avatar" aria-hidden="true"><svg class="icon"><use href="#i-user"/></svg></span>
-                  <span class="review__who">
-                    <span class="review__name">Reviewer name</span>
-                    <span class="review__meta">City, State · Age</span>
-                  </span>
-                </figcaption>
-              </figure>
-            </li>
-            <li class="reviews__item" data-category="previously-skeptical" data-rating="5">
-              <figure class="review">
-                <span class="review__stars" role="img" aria-label="5 out of 5 stars"><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg></span>
-                <p class="review__title">Review title</p>
-                <blockquote class="review__quote">
-                  <p>Placeholder — replace with a real, verified customer review (Previously Skeptical).</p>
-                </blockquote>
-                <figcaption class="review__author">
-                  <span class="review__avatar" aria-hidden="true"><svg class="icon"><use href="#i-user"/></svg></span>
-                  <span class="review__who">
-                    <span class="review__name">Reviewer name</span>
-                    <span class="review__meta">City, State · Age</span>
-                  </span>
-                </figcaption>
-              </figure>
-            </li>
-            <li class="reviews__item" data-category="high-net-worth" data-rating="5">
-              <figure class="review">
-                <span class="review__stars" role="img" aria-label="5 out of 5 stars"><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg></span>
-                <p class="review__title">Review title</p>
-                <blockquote class="review__quote">
-                  <p>Placeholder — replace with a real, verified customer review (High Net Worth).</p>
-                </blockquote>
-                <figcaption class="review__author">
-                  <span class="review__avatar" aria-hidden="true"><svg class="icon"><use href="#i-user"/></svg></span>
-                  <span class="review__who">
-                    <span class="review__name">Reviewer name</span>
-                    <span class="review__meta">City, State · Age</span>
-                  </span>
-                </figcaption>
-              </figure>
-            </li>
-            <li class="reviews__item" data-category="tradesmen" data-rating="5">
-              <figure class="review">
-                <span class="review__stars" role="img" aria-label="5 out of 5 stars"><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg></span>
-                <p class="review__title">Review title</p>
-                <blockquote class="review__quote">
-                  <p>Placeholder — replace with a real, verified customer review (Tradesmen).</p>
-                </blockquote>
-                <figcaption class="review__author">
-                  <span class="review__avatar" aria-hidden="true"><svg class="icon"><use href="#i-user"/></svg></span>
-                  <span class="review__who">
-                    <span class="review__name">Reviewer name</span>
-                    <span class="review__meta">City, State · Age</span>
-                  </span>
-                </figcaption>
-              </figure>
-            </li>
-          </ul>
+          <ul class="carousel__track reviews" id="reviews-track" role="list" tabindex="0" aria-label="Reviews, scroll horizontally"></ul>
           <button class="carousel__arrow carousel__arrow--next" type="button" id="reviews-next" aria-label="Next reviews">
             <svg class="icon" aria-hidden="true"><use href="#i-chevron"/></svg>
           </button>
         </div>
         <div class="carousel__dots" id="reviews-dots" role="group" aria-label="Review pages"></div>
+        <p class="carousel__counter" id="reviews-counter" hidden></p>
+        <noscript><p class="review-filter__status">Customer reviews need JavaScript to display.</p></noscript>
+
+        <template id="review-template">
+          <li class="reviews__item">
+            <figure class="review">
+              <span class="review__stars" role="img"><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg></span>
+              <p class="review__title"></p>
+              <blockquote class="review__quote"><p></p></blockquote>
+              <figcaption class="review__author">
+                <span class="review__avatar" aria-hidden="true"></span>
+                <span class="review__who">
+                  <span class="review__name"></span>
+                  <span class="review__meta"></span>
+                </span>
+              </figcaption>
+            </figure>
+          </li>
+        </template>
       </div>
     </section>
 
@@ -950,297 +822,299 @@
           <h3 class="section-title" id="distribution-taxes-title">What Tax Rules Apply to Gold IRA Distributions?</h3>
           <p class="section-lede">Gold IRA distributions are generally subject to the tax rules governing the underlying IRA rather than a separate tax system for gold. Traditional IRA distributions generally count as taxable income to the extent the amounts are taxable, while qualified Roth IRA distributions are generally tax-free. Early distributions before age 59½ can trigger an additional 10% tax unless an exception applies. Tax treatment also depends on distribution timing and required minimum distribution rules. Traditional IRA owners generally begin RMDs at age 73, while original Roth IRA owners do not have lifetime RMDs. Physical metals distributed from an IRA are treated as IRA distributions, so the applicable tax rules depend on the account type and distribution circumstances. Contractual and custodial requirements still apply when physical metals are distributed. The applicable rules for eligible metals and IRA-held precious metals are addressed by the IRS.</p>
         </div>
-
-        <div class="section-head section-head--sub section-head--prose" id="after-retirement">
-          <span class="section-head__rule" aria-hidden="true"></span>
-          <h3 class="section-title" id="after-retirement-title">What Happens to a Gold IRA After the Owner Retires?</h3>
-          <p class="section-lede">A Gold IRA remains invested after retirement unless the account holder takes distributions or transfers the assets under applicable IRA rules. Traditional IRA owners generally begin required minimum distributions at age 73, even if retirement occurred earlier. Retirement does not require complete Gold IRA liquidation. Permitted distributions include cash or eligible physical metals, while traditional IRA distributions generally count as taxable income. Qualified Roth IRA distributions follow different tax rules. Required minimum distributions use the prior December 31 IRA balance and the applicable IRS distribution period. Account management continues through the IRA custodian, including physical metal storage and administration.</p>
-        </div>
       </div>
     </section>
 
-    <!-- ===================== GOLD IRA CUSTODIAN SERVICES ===================== -->
-    <section class="section section--white" id="custodian-services" aria-labelledby="custodian-services-head-title">
+    <!-- ===================== GOLD IRA FAQ ===================== -->
+    <!-- Questions keep the spec heading levels (H2-H4) inside <summary>; group labels are spec "Labels", not headings -->
+    <section class="section section--white" id="gold-ira-faq" aria-labelledby="gold-ira-faq-title">
       <div class="container">
-        <div class="section-head" id="custodian-services-head">
+        <div class="section-head">
           <span class="section-head__rule" aria-hidden="true"></span>
-          <p class="eyebrow">Gold IRA Custodian Services</p>
-          <h2 class="section-title" id="custodian-services-head-title">What Services Does a Gold IRA Custodian Provide?</h2>
-          <p class="section-lede">A Gold IRA custodian provides account administration, transaction processing, precious metal custody, recordkeeping, and required tax reporting. Custodian services support the management of retirement accounts holding eligible precious metals.</p>
-          <p class="section-lede">The following services are provided by a Gold IRA custodian:</p>
+          <p class="section-title" id="gold-ira-faq-title">Frequently asked questions</p>
         </div>
 
-        <ol class="step-list" role="list">
-          <li class="step-list__item">
-            <span class="step-list__num" aria-hidden="true">1</span>
-            <h3 class="step-list__title">Account Administration</h3>
-            <p class="step-list__text">Establishes and maintains the self-directed IRA according to applicable requirements.</p>
-          </li>
-          <li class="step-list__item">
-            <span class="step-list__num" aria-hidden="true">2</span>
-            <h3 class="step-list__title">Precious Metal Custody</h3>
-            <p class="step-list__text">Arranges secure storage of eligible precious metals through an approved depository.</p>
-          </li>
-          <li class="step-list__item">
-            <span class="step-list__num" aria-hidden="true">3</span>
-            <h3 class="step-list__title">Transaction Processing</h3>
-            <p class="step-list__text">Processes purchases, sales, transfers, and contributions involving eligible IRA assets.</p>
-          </li>
-          <li class="step-list__item">
-            <span class="step-list__num" aria-hidden="true">4</span>
-            <h3 class="step-list__title">Recordkeeping</h3>
-            <p class="step-list__text">Maintains account records, transaction details, asset information, and required documentation.</p>
-          </li>
-          <li class="step-list__item">
-            <span class="step-list__num" aria-hidden="true">5</span>
-            <h3 class="step-list__title">Tax Reporting</h3>
-            <p class="step-list__text">Prepares required IRS reports related to IRA contributions, distributions, and account activity.</p>
-          </li>
-          <li class="step-list__item">
-            <span class="step-list__num" aria-hidden="true">6</span>
-            <h3 class="step-list__title">Distribution Processing</h3>
-            <p class="step-list__text">Processes permitted cash or physical metal distributions according to applicable IRA rules.</p>
-          </li>
-          <li class="step-list__item">
-            <span class="step-list__num" aria-hidden="true">7</span>
-            <h3 class="step-list__title">Asset Transfers</h3>
-            <p class="step-list__text">Handles eligible transfers or rollovers between retirement accounts based on applicable requirements through a Gold IRA Custodian.</p>
-          </li>
-        </ol>
+        <div class="faq">
+          <details class="faq-item" id="after-retirement">
+            <summary><span class="faq-item__toggle" aria-hidden="true"></span><h3 class="faq-item__q" id="after-retirement-title">What Happens to a Gold IRA After the Owner Retires?</h3></summary>
+            <div class="faq-item__a">
+              <p>A Gold IRA remains invested after retirement unless the account holder takes distributions or transfers the assets under applicable IRA rules. Traditional IRA owners generally begin required minimum distributions at age 73, even if retirement occurred earlier. Retirement does not require complete Gold IRA liquidation. Permitted distributions include cash or eligible physical metals, while traditional IRA distributions generally count as taxable income. Qualified Roth IRA distributions follow different tax rules. Required minimum distributions use the prior December 31 IRA balance and the applicable IRS distribution period. Account management continues through the IRA custodian, including physical metal storage and administration.</p>
+            </div>
+          </details>
 
-        <div class="section-head section-head--sub section-head--prose" id="custodian-records">
-          <span class="section-head__rule" aria-hidden="true"></span>
-          <h3 class="section-title" id="custodian-records-title">What Records Does a Gold IRA Custodian Maintain?</h3>
-          <p class="section-lede">A Gold IRA custodian maintains records of account balances, contributions, transactions, distributions, and required tax reporting. IRS guidance identifies account balances, contributions, earnings, participant statements, and transaction records among the records maintained for retirement accounts. Custodial records provide documentation of account activity and retirement asset movements. Transaction records support accurate reporting of contributions, distributions, and other account activity. Recordkeeping requirements help maintain documentation related to the administration of the retirement account.</p>
-        </div>
-
-        <div class="section-head section-head--sub section-head--prose" id="custodian-transactions">
-          <span class="section-head__rule" aria-hidden="true"></span>
-          <h3 class="section-title" id="custodian-transactions-title">How Does a Custodian Handle Gold IRA Transactions?</h3>
-          <p class="section-lede">A custodian handles Gold IRA transactions by processing purchases, sales, transfers, contributions, and distributions according to applicable IRA rules. Trustee-to-trustee transfers move assets directly between retirement accounts without being treated as rollovers, while reportable distributions and other transactions require appropriate IRS reporting. Custodians maintain transaction records to document account activity and asset movements. Transaction processing follows the requirements associated with the IRA type and transaction category. Required documentation supports accurate account administration and tax reporting.</p>
-        </div>
-
-        <div class="section-head section-head--sub section-head--prose" id="multiple-custodians">
-          <span class="section-head__rule" aria-hidden="true"></span>
-          <h4 class="section-title section-title--sm" id="multiple-custodians-title">Can a Gold IRA Have More Than One Custodian?</h4>
-          <p class="section-lede">Yes, an individual can have multiple IRAs held by different custodians. Each IRA remains a separate account, while trustee-to-trustee transfers allow assets to move directly between IRAs held by different custodians. Each custodian maintains records for the IRA under its administration. Account holders follow the applicable rules for contributions, distributions, and transfers within each IRA. Custodian requirements and account fees differ according to the services provided.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===================== GOLD IRA ACCOUNT MONITORING ===================== -->
-    <section class="section" id="account-monitoring" aria-labelledby="account-monitoring-head-title">
-      <div class="container">
-        <div class="section-head" id="account-monitoring-head">
-          <span class="section-head__rule" aria-hidden="true"></span>
-          <p class="eyebrow">Gold IRA Account Monitoring</p>
-          <h2 class="section-title" id="account-monitoring-head-title">How Can You Monitor a Gold IRA Account?</h2>
-          <p class="section-lede">Gold IRA account monitoring involves reviewing account statements, precious metal holdings, transaction records, fees, and custodian reports. Regular reviews help account owners track account activity and confirm that recorded information matches the intended account structure.</p>
-          <p class="section-lede">You can monitor a Gold IRA account by following the six steps below.</p>
-        </div>
-
-        <ol class="step-list" role="list">
-          <li class="step-list__item">
-            <span class="step-list__num" aria-hidden="true">1</span>
-            <h3 class="step-list__title">Review Account Statements</h3>
-            <p class="step-list__text">Account statements provide records of precious metal holdings, account values, transactions, fees, and other relevant information. Regular statement reviews help identify changes in account activity.</p>
-          </li>
-          <li class="step-list__item">
-            <span class="step-list__num" aria-hidden="true">2</span>
-            <h3 class="step-list__title">Check Precious Metal Holdings</h3>
-            <p class="step-list__text">Review the metals recorded within the account and compare the listed quantities with purchase and distribution records. Holding records help confirm that account information remains accurate.</p>
-          </li>
-          <li class="step-list__item">
-            <span class="step-list__num" aria-hidden="true">3</span>
-            <h3 class="step-list__title">Monitor Account Transactions</h3>
-            <p class="step-list__text">Review purchases, sales, transfers, distributions, and other account activity. Transaction records provide a history of changes made to the retirement account.</p>
-          </li>
-          <li class="step-list__item">
-            <span class="step-list__num" aria-hidden="true">4</span>
-            <h3 class="step-list__title">Review Custodian Fees</h3>
-            <p class="step-list__text">Check administrative, storage, transaction, and other applicable account fees. Fee records help account owners understand expenses charged against the retirement account.</p>
-          </li>
-          <li class="step-list__item">
-            <span class="step-list__num" aria-hidden="true">5</span>
-            <h3 class="step-list__title">Compare Account Records</h3>
-            <p class="step-list__text">Compare statements with transaction confirmations, purchase documents, and custodian records. Regular comparisons help identify discrepancies that require clarification.</p>
-          </li>
-          <li class="step-list__item">
-            <span class="step-list__num" aria-hidden="true">6</span>
-            <h3 class="step-list__title">Use Online Account Access</h3>
-            <p class="step-list__text">Many custodians provide online portals for reviewing account information and activity. Digital access provides a convenient way to monitor retirement assets between statement periods.</p>
-          </li>
-        </ol>
-        <p class="block-note">Regular monitoring helps account owners maintain accurate records and understand account activity. Consistent reviews also provide a clearer view of how fees, transactions, and precious metal values affect the Gold IRA Account.</p>
-
-        <div class="section-head section-head--sub" id="statement-info">
-          <span class="section-head__rule" aria-hidden="true"></span>
-          <h3 class="section-title" id="statement-info-title">What Information Appears on a Gold IRA Statement?</h3>
-          <p class="section-lede">A Gold IRA statement generally provides account information, precious metal holdings, transactions, values, fees, and other relevant account records.</p>
-          <p class="section-lede">Information that appears on a Gold IRA statement is listed below.</p>
-        </div>
-
-        <dl class="fact-list">
-          <div class="fact-list__row">
-            <dt>Account Balance</dt>
-            <dd>The statement shows the recorded value or balance associated with the retirement account.</dd>
+          <div class="faq-group" id="custodian-services">
+            <p class="faq-group__label">Gold IRA Custodian Services</p>
+            <details class="faq-item" id="custodian-services-head">
+              <summary><span class="faq-item__toggle" aria-hidden="true"></span><h2 class="faq-item__q" id="custodian-services-head-title">What Services Does a Gold IRA Custodian Provide?</h2></summary>
+              <div class="faq-item__a">
+                <p>A Gold IRA custodian provides account administration, transaction processing, precious metal custody, recordkeeping, and required tax reporting. Custodian services support the management of retirement accounts holding eligible precious metals.</p>
+                <p>The following services are provided by a Gold IRA custodian:</p>
+                <ol class="step-list" role="list">
+                  <li class="step-list__item">
+                    <span class="step-list__num" aria-hidden="true">1</span>
+                    <h3 class="step-list__title">Account Administration</h3>
+                    <p class="step-list__text">Establishes and maintains the self-directed IRA according to applicable requirements.</p>
+                  </li>
+                  <li class="step-list__item">
+                    <span class="step-list__num" aria-hidden="true">2</span>
+                    <h3 class="step-list__title">Precious Metal Custody</h3>
+                    <p class="step-list__text">Arranges secure storage of eligible precious metals through an approved depository.</p>
+                  </li>
+                  <li class="step-list__item">
+                    <span class="step-list__num" aria-hidden="true">3</span>
+                    <h3 class="step-list__title">Transaction Processing</h3>
+                    <p class="step-list__text">Processes purchases, sales, transfers, and contributions involving eligible IRA assets.</p>
+                  </li>
+                  <li class="step-list__item">
+                    <span class="step-list__num" aria-hidden="true">4</span>
+                    <h3 class="step-list__title">Recordkeeping</h3>
+                    <p class="step-list__text">Maintains account records, transaction details, asset information, and required documentation.</p>
+                  </li>
+                  <li class="step-list__item">
+                    <span class="step-list__num" aria-hidden="true">5</span>
+                    <h3 class="step-list__title">Tax Reporting</h3>
+                    <p class="step-list__text">Prepares required IRS reports related to IRA contributions, distributions, and account activity.</p>
+                  </li>
+                  <li class="step-list__item">
+                    <span class="step-list__num" aria-hidden="true">6</span>
+                    <h3 class="step-list__title">Distribution Processing</h3>
+                    <p class="step-list__text">Processes permitted cash or physical metal distributions according to applicable IRA rules.</p>
+                  </li>
+                  <li class="step-list__item">
+                    <span class="step-list__num" aria-hidden="true">7</span>
+                    <h3 class="step-list__title">Asset Transfers</h3>
+                    <p class="step-list__text">Handles eligible transfers or rollovers between retirement accounts based on applicable requirements through a Gold IRA Custodian.</p>
+                  </li>
+                </ol>
+              </div>
+            </details>
+            <details class="faq-item" id="custodian-records">
+              <summary><span class="faq-item__toggle" aria-hidden="true"></span><h3 class="faq-item__q" id="custodian-records-title">What Records Does a Gold IRA Custodian Maintain?</h3></summary>
+              <div class="faq-item__a">
+                <p>A Gold IRA custodian maintains records of account balances, contributions, transactions, distributions, and required tax reporting. IRS guidance identifies account balances, contributions, earnings, participant statements, and transaction records among the records maintained for retirement accounts. Custodial records provide documentation of account activity and retirement asset movements. Transaction records support accurate reporting of contributions, distributions, and other account activity. Recordkeeping requirements help maintain documentation related to the administration of the retirement account.</p>
+              </div>
+            </details>
+            <details class="faq-item" id="custodian-transactions">
+              <summary><span class="faq-item__toggle" aria-hidden="true"></span><h3 class="faq-item__q" id="custodian-transactions-title">How Does a Custodian Handle Gold IRA Transactions?</h3></summary>
+              <div class="faq-item__a">
+                <p>A custodian handles Gold IRA transactions by processing purchases, sales, transfers, contributions, and distributions according to applicable IRA rules. Trustee-to-trustee transfers move assets directly between retirement accounts without being treated as rollovers, while reportable distributions and other transactions require appropriate IRS reporting. Custodians maintain transaction records to document account activity and asset movements. Transaction processing follows the requirements associated with the IRA type and transaction category. Required documentation supports accurate account administration and tax reporting.</p>
+              </div>
+            </details>
+            <details class="faq-item" id="multiple-custodians">
+              <summary><span class="faq-item__toggle" aria-hidden="true"></span><h4 class="faq-item__q" id="multiple-custodians-title">Can a Gold IRA Have More Than One Custodian?</h4></summary>
+              <div class="faq-item__a">
+                <p>Yes, an individual can have multiple IRAs held by different custodians. Each IRA remains a separate account, while trustee-to-trustee transfers allow assets to move directly between IRAs held by different custodians. Each custodian maintains records for the IRA under its administration. Account holders follow the applicable rules for contributions, distributions, and transfers within each IRA. Custodian requirements and account fees differ according to the services provided.</p>
+              </div>
+            </details>
           </div>
-          <div class="fact-list__row">
-            <dt>Precious Metal Holdings</dt>
-            <dd>The statement identifies eligible metals held within the account and records applicable quantities.</dd>
+
+          <div class="faq-group" id="account-monitoring">
+            <p class="faq-group__label">Gold IRA Account Monitoring</p>
+            <details class="faq-item" id="account-monitoring-head">
+              <summary><span class="faq-item__toggle" aria-hidden="true"></span><h2 class="faq-item__q" id="account-monitoring-head-title">How Can You Monitor a Gold IRA Account?</h2></summary>
+              <div class="faq-item__a">
+                <p>Gold IRA account monitoring involves reviewing account statements, precious metal holdings, transaction records, fees, and custodian reports. Regular reviews help account owners track account activity and confirm that recorded information matches the intended account structure.</p>
+                <p>You can monitor a Gold IRA account by following the six steps below.</p>
+                <ol class="step-list" role="list">
+                  <li class="step-list__item">
+                    <span class="step-list__num" aria-hidden="true">1</span>
+                    <h3 class="step-list__title">Review Account Statements</h3>
+                    <p class="step-list__text">Account statements provide records of precious metal holdings, account values, transactions, fees, and other relevant information. Regular statement reviews help identify changes in account activity.</p>
+                  </li>
+                  <li class="step-list__item">
+                    <span class="step-list__num" aria-hidden="true">2</span>
+                    <h3 class="step-list__title">Check Precious Metal Holdings</h3>
+                    <p class="step-list__text">Review the metals recorded within the account and compare the listed quantities with purchase and distribution records. Holding records help confirm that account information remains accurate.</p>
+                  </li>
+                  <li class="step-list__item">
+                    <span class="step-list__num" aria-hidden="true">3</span>
+                    <h3 class="step-list__title">Monitor Account Transactions</h3>
+                    <p class="step-list__text">Review purchases, sales, transfers, distributions, and other account activity. Transaction records provide a history of changes made to the retirement account.</p>
+                  </li>
+                  <li class="step-list__item">
+                    <span class="step-list__num" aria-hidden="true">4</span>
+                    <h3 class="step-list__title">Review Custodian Fees</h3>
+                    <p class="step-list__text">Check administrative, storage, transaction, and other applicable account fees. Fee records help account owners understand expenses charged against the retirement account.</p>
+                  </li>
+                  <li class="step-list__item">
+                    <span class="step-list__num" aria-hidden="true">5</span>
+                    <h3 class="step-list__title">Compare Account Records</h3>
+                    <p class="step-list__text">Compare statements with transaction confirmations, purchase documents, and custodian records. Regular comparisons help identify discrepancies that require clarification.</p>
+                  </li>
+                  <li class="step-list__item">
+                    <span class="step-list__num" aria-hidden="true">6</span>
+                    <h3 class="step-list__title">Use Online Account Access</h3>
+                    <p class="step-list__text">Many custodians provide online portals for reviewing account information and activity. Digital access provides a convenient way to monitor retirement assets between statement periods.</p>
+                  </li>
+                </ol>
+                <p class="block-note">Regular monitoring helps account owners maintain accurate records and understand account activity. Consistent reviews also provide a clearer view of how fees, transactions, and precious metal values affect the Gold IRA Account.</p>
+              </div>
+            </details>
+            <details class="faq-item" id="statement-info">
+              <summary><span class="faq-item__toggle" aria-hidden="true"></span><h3 class="faq-item__q" id="statement-info-title">What Information Appears on a Gold IRA Statement?</h3></summary>
+              <div class="faq-item__a">
+                <p>A Gold IRA statement generally provides account information, precious metal holdings, transactions, values, fees, and other relevant account records.</p>
+                <p>Information that appears on a Gold IRA statement is listed below.</p>
+                <dl class="fact-list">
+                  <div class="fact-list__row">
+                    <dt>Account Balance</dt>
+                    <dd>The statement shows the recorded value or balance associated with the retirement account.</dd>
+                  </div>
+                  <div class="fact-list__row">
+                    <dt>Precious Metal Holdings</dt>
+                    <dd>The statement identifies eligible metals held within the account and records applicable quantities.</dd>
+                  </div>
+                  <div class="fact-list__row">
+                    <dt>Transaction History</dt>
+                    <dd>Purchases, sales, transfers, contributions, and distributions appear as applicable account activity.</dd>
+                  </div>
+                  <div class="fact-list__row">
+                    <dt>Account Fees</dt>
+                    <dd>Custodian, storage, transaction, and other applicable charges appear within the statement records.</dd>
+                  </div>
+                  <div class="fact-list__row">
+                    <dt>Account Information</dt>
+                    <dd>The statement provides identifying information related to the retirement account and custodian.</dd>
+                  </div>
+                  <div class="fact-list__row">
+                    <dt>Valuation Information</dt>
+                    <dd>Statements often provide valuation details based on the custodian's reporting methods and applicable pricing information.</dd>
+                  </div>
+                </dl>
+              </div>
+            </details>
+            <details class="faq-item" id="check-activity">
+              <summary><span class="faq-item__toggle" aria-hidden="true"></span><h3 class="faq-item__q" id="check-activity-title">How Can You Check Gold IRA Account Activity?</h3></summary>
+              <div class="faq-item__a">
+                <p>Gold IRA account activity can be checked through custodian statements, online portals, transaction confirmations, and account records. Regular reviews help verify purchases, sales, transfers, distributions, and fees.</p>
+                <p>You can check Gold IRA account activity by following the five steps below.</p>
+                <ol class="step-list" role="list">
+                  <li class="step-list__item">
+                    <span class="step-list__num" aria-hidden="true">1</span>
+                    <h4 class="step-list__title">Log in to the Custodian Portal</h4>
+                    <p class="step-list__text">Access the online account portal provided by the Gold IRA custodian. Account dashboards often display current holdings, balances, transactions, and available documents.</p>
+                  </li>
+                  <li class="step-list__item">
+                    <span class="step-list__num" aria-hidden="true">2</span>
+                    <h4 class="step-list__title">Review Recent Transactions</h4>
+                    <p class="step-list__text">Check recent purchases, sales, transfers, contributions, and distributions recorded within the account. Transaction details help confirm that account activity matches authorized instructions.</p>
+                  </li>
+                  <li class="step-list__item">
+                    <span class="step-list__num" aria-hidden="true">3</span>
+                    <h4 class="step-list__title">Check Holding Records</h4>
+                    <p class="step-list__text">Review the quantity and type of precious metals recorded in the account. Holding information helps confirm that purchased assets appear correctly in the account records.</p>
+                  </li>
+                  <li class="step-list__item">
+                    <span class="step-list__num" aria-hidden="true">4</span>
+                    <h4 class="step-list__title">Review Account Fees</h4>
+                    <p class="step-list__text">Check administrative, storage, transaction, and other applicable charges. Fee records help explain changes in the account balance.</p>
+                  </li>
+                  <li class="step-list__item">
+                    <span class="step-list__num" aria-hidden="true">5</span>
+                    <h4 class="step-list__title">Download Account Statements</h4>
+                    <p class="step-list__text">Save current and historical statements for personal recordkeeping. Statement archives provide supporting documentation for reviewing account activity over time.</p>
+                  </li>
+                </ol>
+              </div>
+            </details>
+            <details class="faq-item" id="holdings-online">
+              <summary><span class="faq-item__toggle" aria-hidden="true"></span><h4 class="faq-item__q" id="holdings-online-title">Can You Review Gold IRA Holdings Online?</h4></summary>
+              <div class="faq-item__a">
+                <p>Yes, many Gold IRA custodians provide online access for reviewing account holdings and related information. Online portals often display precious metal quantities, account balances, transaction history, statements, and fee records.</p>
+                <p>Online access provides a convenient way to review account information without waiting for a mailed statement. Account owners should verify how frequently the custodian updates online valuations and holding information. Precious metal values also fluctuate according to market prices, so an online valuation represents a current estimate rather than a guaranteed sale amount. Secure login credentials and account verification procedures help protect online retirement account information. Online access provides a practical method for reviewing Gold IRA Holdings Online alongside regular statements and custodian records.</p>
+              </div>
+            </details>
           </div>
-          <div class="fact-list__row">
-            <dt>Transaction History</dt>
-            <dd>Purchases, sales, transfers, contributions, and distributions appear as applicable account activity.</dd>
+
+          <div class="faq-group" id="beneficiaries">
+            <p class="faq-group__label">Gold IRA Beneficiary Planning</p>
+            <details class="faq-item" id="beneficiaries-head">
+              <summary><span class="faq-item__toggle" aria-hidden="true"></span><h2 class="faq-item__q" id="beneficiaries-head-title">How Does a Gold IRA Work for Beneficiaries?</h2></summary>
+              <div class="faq-item__a">
+                <p>A Gold IRA transfers its remaining assets to designated beneficiaries after the account owner dies. The beneficiary process follows IRA distribution rules and depends on the beneficiary's relationship to the account owner and the beneficiary designation.</p>
+                <p>Gold IRA works for beneficiaries by following the five steps below.</p>
+                <ol class="step-list" role="list">
+                  <li class="step-list__item">
+                    <span class="step-list__num" aria-hidden="true">1</span>
+                    <h3 class="step-list__title">Review the Beneficiary Designation</h3>
+                    <p class="step-list__text">The custodian reviews the beneficiary information recorded on the Gold IRA. The designation determines who receives the remaining account assets after the owner's death.</p>
+                  </li>
+                  <li class="step-list__item">
+                    <span class="step-list__num" aria-hidden="true">2</span>
+                    <h3 class="step-list__title">Confirm the Beneficiary's Status</h3>
+                    <p class="step-list__text">The beneficiary provides documents confirming their identity and relationship to the account owner. Spouse and non-spouse beneficiaries follow different distribution rules under applicable tax requirements.</p>
+                  </li>
+                  <li class="step-list__item">
+                    <span class="step-list__num" aria-hidden="true">3</span>
+                    <h3 class="step-list__title">Determine the Distribution Rules</h3>
+                    <p class="step-list__text">The beneficiary and custodian determine the applicable distribution period and required withdrawals. The rules depend on factors including beneficiary status, account type, and the owner's age at death.</p>
+                  </li>
+                  <li class="step-list__item">
+                    <span class="step-list__num" aria-hidden="true">4</span>
+                    <h3 class="step-list__title">Choose an Eligible Distribution Method</h3>
+                    <p class="step-list__text">The beneficiary follows an available distribution method under the applicable IRA rules. Physical metals can remain within an inherited IRA when the required account structure and custodian arrangements are maintained.</p>
+                  </li>
+                  <li class="step-list__item">
+                    <span class="step-list__num" aria-hidden="true">5</span>
+                    <h3 class="step-list__title">Complete Required Account Procedures</h3>
+                    <p class="step-list__text">The custodian processes the inherited account according to applicable IRS requirements. Required forms, transfers, distributions, and tax reporting are completed before the beneficiary receives or manages the inherited assets.</p>
+                  </li>
+                </ol>
+              </div>
+            </details>
+            <details class="faq-item" id="who-can-be-beneficiary">
+              <summary><span class="faq-item__toggle" aria-hidden="true"></span><h3 class="faq-item__q" id="who-can-be-beneficiary-title">Who Can Be Named as a Gold IRA Beneficiary?</h3></summary>
+              <div class="faq-item__a">
+                <p>A Gold IRA beneficiary can generally be a spouse, another person, a trust, or an eligible organization. The account owner designates beneficiaries through the IRA custodian and should review the designation after major life events.</p>
+                <p>A spouse often receives special treatment under inherited IRA rules, while non-spouse beneficiaries follow different distribution requirements. Trust and organizational designations require additional consideration because legal and tax rules affect how inherited assets are handled. A properly recorded designation helps ensure the account passes according to the owner's estate planning intentions. Clear beneficiary records also help reduce administrative complications after death and provide a defined process for handling the inherited account. Proper beneficiary planning forms an important part of managing a Gold IRA Beneficiary designation.</p>
+              </div>
+            </details>
+            <details class="faq-item" id="after-owner-dies">
+              <summary><span class="faq-item__toggle" aria-hidden="true"></span><h3 class="faq-item__q" id="after-owner-dies-title">What Happens to a Gold IRA After the Account Owner Dies?</h3></summary>
+              <div class="faq-item__a">
+                <p>A Gold IRA follows an inherited IRA process after the account owner dies. The custodian reviews the beneficiary designation, verifies the beneficiary, and applies the distribution rules required for the inherited account.</p>
+                <p>To know what will happen to a Gold IRA after the owner dies, follow the six steps below.</p>
+                <ol class="step-list" role="list">
+                  <li class="step-list__item">
+                    <span class="step-list__num" aria-hidden="true">1</span>
+                    <h4 class="step-list__title">Notify the Custodian</h4>
+                    <p class="step-list__text">The beneficiary or estate representative notifies the Gold IRA custodian about the account owner's death. Required documentation generally includes a death certificate and beneficiary identification.</p>
+                  </li>
+                  <li class="step-list__item">
+                    <span class="step-list__num" aria-hidden="true">2</span>
+                    <h4 class="step-list__title">Verify the Beneficiary</h4>
+                    <p class="step-list__text">The custodian confirms the designated beneficiary and reviews the beneficiary's relationship to the deceased owner. The verification process determines which inherited IRA rules apply.</p>
+                  </li>
+                  <li class="step-list__item">
+                    <span class="step-list__num" aria-hidden="true">3</span>
+                    <h4 class="step-list__title">Establish the Inherited Account</h4>
+                    <p class="step-list__text">The custodian establishes or transfers the assets into an inherited IRA structure when permitted under applicable rules. The account preserves the tax treatment required for inherited retirement assets.</p>
+                  </li>
+                  <li class="step-list__item">
+                    <span class="step-list__num" aria-hidden="true">4</span>
+                    <h4 class="step-list__title">Determine Required Distributions</h4>
+                    <p class="step-list__text">The beneficiary follows the distribution requirements that apply to the inherited IRA. Distribution timing depends on beneficiary status and other factors under current tax rules.</p>
+                  </li>
+                  <li class="step-list__item">
+                    <span class="step-list__num" aria-hidden="true">5</span>
+                    <h4 class="step-list__title">Handle the Precious Metals</h4>
+                    <p class="step-list__text">The beneficiary follows the custodian's procedures for retaining, selling, or distributing eligible precious metals. Physical metals remain subject to applicable custody and distribution requirements while held inside the IRA.</p>
+                  </li>
+                  <li class="step-list__item">
+                    <span class="step-list__num" aria-hidden="true">6</span>
+                    <h4 class="step-list__title">Complete Tax Reporting</h4>
+                    <p class="step-list__text">The custodian reports applicable distributions to the IRS and provides required tax documents to the beneficiary. Tax treatment depends on the type of IRA and the distribution circumstances.</p>
+                  </li>
+                </ol>
+              </div>
+            </details>
+            <details class="faq-item" id="change-beneficiary">
+              <summary><span class="faq-item__toggle" aria-hidden="true"></span><h4 class="faq-item__q" id="change-beneficiary-title">Can You Change a Gold IRA Beneficiary?</h4></summary>
+              <div class="faq-item__a">
+                <p>Yes, a Gold IRA beneficiary generally can be changed while the account owner is alive. The account owner updates the beneficiary designation through the IRA custodian according to the custodian's procedures. Beneficiary changes often require a completed designation form or an equivalent account update. The revised designation replaces or modifies the previous beneficiary instructions once accepted by the custodian. Account owners should review beneficiary designations after marriage, divorce, family changes, or estate planning updates. Beneficiary designations should also remain consistent with the owner's broader estate planning documents. A custodian's specific procedures and applicable legal requirements determine how a beneficiary change takes effect.</p>
+              </div>
+            </details>
           </div>
-          <div class="fact-list__row">
-            <dt>Account Fees</dt>
-            <dd>Custodian, storage, transaction, and other applicable charges appear within the statement records.</dd>
-          </div>
-          <div class="fact-list__row">
-            <dt>Account Information</dt>
-            <dd>The statement provides identifying information related to the retirement account and custodian.</dd>
-          </div>
-          <div class="fact-list__row">
-            <dt>Valuation Information</dt>
-            <dd>Statements often provide valuation details based on the custodian's reporting methods and applicable pricing information.</dd>
-          </div>
-        </dl>
-
-        <div class="section-head section-head--sub" id="check-activity">
-          <span class="section-head__rule" aria-hidden="true"></span>
-          <h3 class="section-title" id="check-activity-title">How Can You Check Gold IRA Account Activity?</h3>
-          <p class="section-lede">Gold IRA account activity can be checked through custodian statements, online portals, transaction confirmations, and account records. Regular reviews help verify purchases, sales, transfers, distributions, and fees.</p>
-          <p class="section-lede">You can check Gold IRA account activity by following the five steps below.</p>
-        </div>
-
-        <ol class="step-list" role="list">
-          <li class="step-list__item">
-            <span class="step-list__num" aria-hidden="true">1</span>
-            <h4 class="step-list__title">Log in to the Custodian Portal</h4>
-            <p class="step-list__text">Access the online account portal provided by the Gold IRA custodian. Account dashboards often display current holdings, balances, transactions, and available documents.</p>
-          </li>
-          <li class="step-list__item">
-            <span class="step-list__num" aria-hidden="true">2</span>
-            <h4 class="step-list__title">Review Recent Transactions</h4>
-            <p class="step-list__text">Check recent purchases, sales, transfers, contributions, and distributions recorded within the account. Transaction details help confirm that account activity matches authorized instructions.</p>
-          </li>
-          <li class="step-list__item">
-            <span class="step-list__num" aria-hidden="true">3</span>
-            <h4 class="step-list__title">Check Holding Records</h4>
-            <p class="step-list__text">Review the quantity and type of precious metals recorded in the account. Holding information helps confirm that purchased assets appear correctly in the account records.</p>
-          </li>
-          <li class="step-list__item">
-            <span class="step-list__num" aria-hidden="true">4</span>
-            <h4 class="step-list__title">Review Account Fees</h4>
-            <p class="step-list__text">Check administrative, storage, transaction, and other applicable charges. Fee records help explain changes in the account balance.</p>
-          </li>
-          <li class="step-list__item">
-            <span class="step-list__num" aria-hidden="true">5</span>
-            <h4 class="step-list__title">Download Account Statements</h4>
-            <p class="step-list__text">Save current and historical statements for personal recordkeeping. Statement archives provide supporting documentation for reviewing account activity over time.</p>
-          </li>
-        </ol>
-
-        <div class="section-head section-head--sub section-head--prose" id="holdings-online">
-          <span class="section-head__rule" aria-hidden="true"></span>
-          <h4 class="section-title section-title--sm" id="holdings-online-title">Can You Review Gold IRA Holdings Online?</h4>
-          <p class="section-lede">Yes, many Gold IRA custodians provide online access for reviewing account holdings and related information. Online portals often display precious metal quantities, account balances, transaction history, statements, and fee records.</p>
-          <p class="section-lede">Online access provides a convenient way to review account information without waiting for a mailed statement. Account owners should verify how frequently the custodian updates online valuations and holding information. Precious metal values also fluctuate according to market prices, so an online valuation represents a current estimate rather than a guaranteed sale amount. Secure login credentials and account verification procedures help protect online retirement account information. Online access provides a practical method for reviewing Gold IRA Holdings Online alongside regular statements and custodian records.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===================== GOLD IRA BENEFICIARY PLANNING ===================== -->
-    <section class="section section--white" id="beneficiaries" aria-labelledby="beneficiaries-head-title">
-      <div class="container">
-        <div class="section-head" id="beneficiaries-head">
-          <span class="section-head__rule" aria-hidden="true"></span>
-          <p class="eyebrow">Gold IRA Beneficiary Planning</p>
-          <h2 class="section-title" id="beneficiaries-head-title">How Does a Gold IRA Work for Beneficiaries?</h2>
-          <p class="section-lede">A Gold IRA transfers its remaining assets to designated beneficiaries after the account owner dies. The beneficiary process follows IRA distribution rules and depends on the beneficiary's relationship to the account owner and the beneficiary designation.</p>
-          <p class="section-lede">Gold IRA works for beneficiaries by following the five steps below.</p>
-        </div>
-
-        <ol class="step-list" role="list">
-          <li class="step-list__item">
-            <span class="step-list__num" aria-hidden="true">1</span>
-            <h3 class="step-list__title">Review the Beneficiary Designation</h3>
-            <p class="step-list__text">The custodian reviews the beneficiary information recorded on the Gold IRA. The designation determines who receives the remaining account assets after the owner's death.</p>
-          </li>
-          <li class="step-list__item">
-            <span class="step-list__num" aria-hidden="true">2</span>
-            <h3 class="step-list__title">Confirm the Beneficiary's Status</h3>
-            <p class="step-list__text">The beneficiary provides documents confirming their identity and relationship to the account owner. Spouse and non-spouse beneficiaries follow different distribution rules under applicable tax requirements.</p>
-          </li>
-          <li class="step-list__item">
-            <span class="step-list__num" aria-hidden="true">3</span>
-            <h3 class="step-list__title">Determine the Distribution Rules</h3>
-            <p class="step-list__text">The beneficiary and custodian determine the applicable distribution period and required withdrawals. The rules depend on factors including beneficiary status, account type, and the owner's age at death.</p>
-          </li>
-          <li class="step-list__item">
-            <span class="step-list__num" aria-hidden="true">4</span>
-            <h3 class="step-list__title">Choose an Eligible Distribution Method</h3>
-            <p class="step-list__text">The beneficiary follows an available distribution method under the applicable IRA rules. Physical metals can remain within an inherited IRA when the required account structure and custodian arrangements are maintained.</p>
-          </li>
-          <li class="step-list__item">
-            <span class="step-list__num" aria-hidden="true">5</span>
-            <h3 class="step-list__title">Complete Required Account Procedures</h3>
-            <p class="step-list__text">The custodian processes the inherited account according to applicable IRS requirements. Required forms, transfers, distributions, and tax reporting are completed before the beneficiary receives or manages the inherited assets.</p>
-          </li>
-        </ol>
-
-        <div class="section-head section-head--sub section-head--prose" id="who-can-be-beneficiary">
-          <span class="section-head__rule" aria-hidden="true"></span>
-          <h3 class="section-title" id="who-can-be-beneficiary-title">Who Can Be Named as a Gold IRA Beneficiary?</h3>
-          <p class="section-lede">A Gold IRA beneficiary can generally be a spouse, another person, a trust, or an eligible organization. The account owner designates beneficiaries through the IRA custodian and should review the designation after major life events.</p>
-          <p class="section-lede">A spouse often receives special treatment under inherited IRA rules, while non-spouse beneficiaries follow different distribution requirements. Trust and organizational designations require additional consideration because legal and tax rules affect how inherited assets are handled. A properly recorded designation helps ensure the account passes according to the owner's estate planning intentions. Clear beneficiary records also help reduce administrative complications after death and provide a defined process for handling the inherited account. Proper beneficiary planning forms an important part of managing a Gold IRA Beneficiary designation.</p>
-        </div>
-
-        <div class="section-head section-head--sub" id="after-owner-dies">
-          <span class="section-head__rule" aria-hidden="true"></span>
-          <h3 class="section-title" id="after-owner-dies-title">What Happens to a Gold IRA After the Account Owner Dies?</h3>
-          <p class="section-lede">A Gold IRA follows an inherited IRA process after the account owner dies. The custodian reviews the beneficiary designation, verifies the beneficiary, and applies the distribution rules required for the inherited account.</p>
-          <p class="section-lede">To know what will happen to a Gold IRA after the owner dies, follow the six steps below.</p>
-        </div>
-
-        <ol class="step-list" role="list">
-          <li class="step-list__item">
-            <span class="step-list__num" aria-hidden="true">1</span>
-            <h4 class="step-list__title">Notify the Custodian</h4>
-            <p class="step-list__text">The beneficiary or estate representative notifies the Gold IRA custodian about the account owner's death. Required documentation generally includes a death certificate and beneficiary identification.</p>
-          </li>
-          <li class="step-list__item">
-            <span class="step-list__num" aria-hidden="true">2</span>
-            <h4 class="step-list__title">Verify the Beneficiary</h4>
-            <p class="step-list__text">The custodian confirms the designated beneficiary and reviews the beneficiary's relationship to the deceased owner. The verification process determines which inherited IRA rules apply.</p>
-          </li>
-          <li class="step-list__item">
-            <span class="step-list__num" aria-hidden="true">3</span>
-            <h4 class="step-list__title">Establish the Inherited Account</h4>
-            <p class="step-list__text">The custodian establishes or transfers the assets into an inherited IRA structure when permitted under applicable rules. The account preserves the tax treatment required for inherited retirement assets.</p>
-          </li>
-          <li class="step-list__item">
-            <span class="step-list__num" aria-hidden="true">4</span>
-            <h4 class="step-list__title">Determine Required Distributions</h4>
-            <p class="step-list__text">The beneficiary follows the distribution requirements that apply to the inherited IRA. Distribution timing depends on beneficiary status and other factors under current tax rules.</p>
-          </li>
-          <li class="step-list__item">
-            <span class="step-list__num" aria-hidden="true">5</span>
-            <h4 class="step-list__title">Handle the Precious Metals</h4>
-            <p class="step-list__text">The beneficiary follows the custodian's procedures for retaining, selling, or distributing eligible precious metals. Physical metals remain subject to applicable custody and distribution requirements while held inside the IRA.</p>
-          </li>
-          <li class="step-list__item">
-            <span class="step-list__num" aria-hidden="true">6</span>
-            <h4 class="step-list__title">Complete Tax Reporting</h4>
-            <p class="step-list__text">The custodian reports applicable distributions to the IRS and provides required tax documents to the beneficiary. Tax treatment depends on the type of IRA and the distribution circumstances.</p>
-          </li>
-        </ol>
-
-        <div class="section-head section-head--sub section-head--prose" id="change-beneficiary">
-          <span class="section-head__rule" aria-hidden="true"></span>
-          <h4 class="section-title section-title--sm" id="change-beneficiary-title">Can You Change a Gold IRA Beneficiary?</h4>
-          <p class="section-lede">Yes, a Gold IRA beneficiary generally can be changed while the account owner is alive. The account owner updates the beneficiary designation through the IRA custodian according to the custodian's procedures. Beneficiary changes often require a completed designation form or an equivalent account update. The revised designation replaces or modifies the previous beneficiary instructions once accepted by the custodian. Account owners should review beneficiary designations after marriage, divorce, family changes, or estate planning updates. Beneficiary designations should also remain consistent with the owner's broader estate planning documents. A custodian's specific procedures and applicable legal requirements determine how a beneficiary change takes effect.</p>
         </div>
       </div>
     </section>
@@ -1567,8 +1441,8 @@
     </section>
     -->
 
-    <!-- ===================== TEAM ===================== -->
-    <section class="section section--white" id="team" aria-labelledby="team-title">
+    <!-- ===================== TEAM =====================
+    <section class="section" id="team" aria-labelledby="team-title">
       <div class="container">
         <div class="section-head">
           <span class="section-head__rule" aria-hidden="true"></span>
@@ -1584,7 +1458,7 @@
           <li class="member"><span class="member__avatar" aria-hidden="true">TK</span><h3>Thalia Kingsley</h3><p>Gold IRA Fact-Checker</p></li>
         </ul>
       </div>
-    </section>
+    </section> -->
    
   </main>
 
@@ -1653,6 +1527,7 @@
     </div>
   </dialog>
 
+  <script src="js/reviews.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>
