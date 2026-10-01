@@ -175,6 +175,21 @@ button {
   margin: 0 auto clamp(40px, 5vw, 56px);
   text-align: center;
 }
+/* Nothing follows it, so drop the spacing meant for content below */
+.section-head:last-child {
+  margin-bottom: 0;
+}
+/* Second heading block inside the same section */
+.section-head--sub {
+  margin-top: clamp(56px, 7vw, 88px);
+}
+/* Long paragraph copy: wider block, left-aligned under the centered heading */
+.section-head--prose {
+  max-width: 900px;
+}
+.section-head--prose .section-lede {
+  text-align: start;
+}
 .section-head__rule {
   width: 48px;
   height: 4px;
@@ -236,6 +251,14 @@ button {
 }
 .btn--navy:hover {
   background: #1b3353;
+}
+.btn--outline-light {
+  background: none;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.55);
+}
+.btn--outline-light:hover {
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 0 0 1px #fff;
 }
 
 /* Form fields */
@@ -515,7 +538,7 @@ img.is-missing {
 }
 
 /* =========================================================
-   5. Hero + readiness quiz
+   5. Hero + growth calculator
    ========================================================= */
 .hero {
   position: relative;
@@ -586,9 +609,31 @@ img.is-missing {
   letter-spacing: -0.015em;
 }
 .hero__lede {
-  max-width: 470px;
   font: 400 18px/1.7 var(--font-ui);
   color: rgba(255, 255, 255, 0.78);
+}
+
+.hero__points {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.hero__points li {
+  padding-left: 18px;
+  border-left: 2px solid var(--gold);
+}
+.hero__point-title {
+  margin-bottom: 4px;
+  font: 500 18px/1.3 var(--font-display);
+}
+.hero__point-text {
+  font: 400 15px/1.6 var(--font-ui);
+  color: rgba(255, 255, 255, 0.72);
+}
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
 }
 
 .hero__stats {
@@ -614,136 +659,67 @@ img.is-missing {
   color: rgba(255, 255, 255, 0.62);
 }
 
-.quiz {
+.calc {
   flex: none;
-  width: 420px;
-  max-width: 100%;
-  background: #fff;
-  color: var(--blue);
-  box-shadow: 0 30px 40px rgba(6, 12, 24, 0.45);
-}
-.quiz__body {
   display: flex;
   flex-direction: column;
   gap: 22px;
+  width: 420px;
+  max-width: 100%;
   padding: 32px 36px 28px;
+  background: #fff;
+  color: var(--navy);
+  box-shadow: 0 30px 40px rgba(6, 12, 24, 0.45);
 }
-.quiz__meta {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font: 400 11px/1.4 var(--font-ui);
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--grey);
-}
-.quiz__meta strong {
-  font-weight: 600;
-  color: var(--amber);
-}
-.quiz__progress {
-  height: 2px;
-  margin-top: -12px;
-  background: var(--rule-warm);
-}
-.quiz__progress span {
-  display: block;
-  width: 25%;
-  height: 100%;
-  background: var(--amber);
-  transition: width 0.3s ease;
-}
-.quiz__progress--full span {
-  width: 100%;
-}
-.quiz fieldset {
-  min-width: 0;
-  margin: 0;
-  padding: 0;
-  border: 0;
-}
-.quiz legend {
-  padding: 0;
-  margin-bottom: 22px;
-}
-.quiz__question {
+.calc__title {
   font: 400 24px/1.3 var(--font-display);
   color: var(--blue);
+  text-wrap: balance;
 }
-.quiz__options {
-  border-top: 1px solid var(--rule-warm);
+.calc__field {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: baseline;
+  gap: 10px 12px;
 }
-.quiz-option {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 17px 4px;
-  border-bottom: 1px solid var(--rule-warm);
-  font: 400 15.5px/1.35 var(--font-ui);
+.calc__label {
+  font: 600 13.5px/1.2 var(--font-ui);
+}
+.calc__value {
+  font: 500 17px/1.2 var(--font-display);
   color: var(--blue);
-  cursor: pointer;
-  transition: background-color 0.15s ease;
 }
-.quiz-option:hover {
-  background: var(--hover-warm);
+.calc__range {
+  grid-column: 1 / -1;
+  width: 100%;
+  height: 24px; /* tap target */
+  margin: 0;
+  accent-color: var(--amber);
 }
-.quiz-option input {
-  position: absolute;
-  opacity: 0;
-  pointer-events: none;
-}
-.quiz-option__dot {
-  width: 16px;
-  height: 16px;
-  flex: none;
-  border-radius: 50%;
-  border: 1px solid #a3a9b3;
-  background: #fff;
-  transition:
-    border 0.15s ease,
-    background-color 0.15s ease;
-}
-.quiz-option input:checked ~ .quiz-option__dot {
-  border: 5px solid var(--blue);
-  background: var(--amber);
-}
-.quiz-option:has(input:focus-visible) {
-  outline: 2px solid var(--amber);
-  outline-offset: -2px;
-}
-.quiz__actions {
-  display: flex;
-  gap: 12px;
-}
-.quiz__actions .btn--navy {
-  flex: 1;
-}
-.quiz__back {
-  padding: 16px 20px;
-  background: none;
-  border: 1px solid var(--rule-warm);
-  border-radius: var(--radius-sm);
-  font: 600 15px/1 var(--font-ui);
-  color: var(--navy);
-}
-.quiz__back:hover {
-  background: var(--hover-warm);
-}
-.quiz__foot {
-  padding: 16px 36px;
+.calc__result {
+  padding: 18px 20px;
   background: var(--ivory);
+  border-left: 3px solid var(--amber);
+}
+.calc__result-label {
+  font: 600 11px/1.4 var(--font-ui);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--amber);
+}
+.calc__balance {
+  margin-block: 4px;
+  font: 400 34px/1.15 var(--font-display);
+  color: var(--blue);
+  font-variant-numeric: tabular-nums;
+}
+.calc__contributed {
   font: 400 14px/1.5 var(--font-ui);
   color: var(--text-2);
 }
-.quiz__foot button {
-  padding: 0;
-  background: none;
-  border: 0;
-  color: var(--blue);
-  text-decoration: underline;
-  text-underline-offset: 3px;
+.calc__disclaimer {
+  font: 400 12px/1.55 var(--font-ui);
+  color: var(--muted);
 }
 
 @media (max-width: 1024px) {
@@ -754,7 +730,7 @@ img.is-missing {
     flex-direction: column;
     align-items: stretch;
   }
-  .quiz {
+  .calc {
     width: 100%;
     max-width: 560px;
   }
@@ -766,14 +742,8 @@ img.is-missing {
   .hero__lede {
     font-size: 16.5px;
   }
-  .quiz__body {
+  .calc {
     padding: 26px 22px 22px;
-  }
-  .quiz__foot {
-    padding: 14px 22px;
-  }
-  .quiz__question {
-    font-size: 21px;
   }
   .hero__stats {
     flex-direction: column;
@@ -782,17 +752,295 @@ img.is-missing {
 }
 
 /* =========================================================
-   6. What is a Gold IRA
+   6. Reviews: rating summary, collapsible filter, carousel
    ========================================================= */
-.definition {
-  max-width: 900px;
+.rating-summary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px 16px;
 }
-.definition__statement {
-  font: 400 clamp(24px, 2.8vw, 32px)/1.5 var(--font-display);
-  color: var(--navy);
-  text-wrap: balance;
+.rating-summary__stars {
+  display: flex;
+  gap: 4px;
+  color: var(--amber);
+}
+.rating-summary__stars .icon {
+  width: 22px;
+  height: 22px;
+  fill: currentColor;
+}
+.rating-summary p {
+  display: flex;
+  flex-direction: column;
+  text-align: start;
+}
+.rating-summary__score {
+  font: 600 22px/1.2 var(--font-ui);
+  color: var(--ink);
+}
+.rating-summary__count {
+  font: 400 14px/1.4 var(--font-ui);
+  color: var(--text-2);
 }
 
+/* Collapsible category filter */
+.review-filter {
+  max-width: 900px;
+  margin-inline: auto;
+  background: #fff;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 1px 3px rgba(37, 67, 108, 0.08);
+}
+.review-filter__toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 18px 24px;
+  font: 500 18px/1.3 var(--font-display);
+  color: var(--navy);
+  list-style: none;
+  cursor: pointer;
+}
+.review-filter__toggle::-webkit-details-marker {
+  display: none;
+}
+.review-filter__toggle:focus-visible {
+  outline-offset: -3px;
+}
+.review-filter__toggle .icon {
+  width: 18px;
+  height: 18px;
+}
+.review-filter__chevron {
+  transform: rotate(90deg);
+  transition: transform 0.2s ease;
+}
+.review-filter[open] .review-filter__chevron {
+  transform: rotate(-90deg);
+}
+.review-filter__chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 24px 22px;
+}
+.chip {
+  padding: 8px 14px;
+  background: var(--surface-2);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-md);
+  font: 600 13px/1.2 var(--font-ui);
+  color: var(--text);
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease;
+}
+.chip:hover {
+  border-color: var(--rule-strong);
+}
+.chip:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.chip[aria-pressed="true"] {
+  background: var(--blue);
+  border-color: var(--blue);
+  color: #fff;
+}
+.review-filter__status {
+  margin: 14px 0 24px;
+  text-align: center;
+  font: 400 14px/1.4 var(--font-ui);
+  color: var(--text-2);
+}
+
+/* Carousel: native scroll-snap track, arrows sit outside it */
+.carousel {
+  --per-view: 3;
+  --carousel-gap: 24px;
+  position: relative;
+}
+.carousel__track {
+  position: relative;
+  display: flex;
+  gap: var(--carousel-gap);
+  padding: 4px 2px 8px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: 2px; /* match the side padding so the first card snaps to scrollLeft 0 */
+  scrollbar-width: none;
+}
+.carousel__track::-webkit-scrollbar {
+  display: none;
+}
+.carousel__track:focus-visible {
+  outline-offset: 2px;
+}
+.carousel__track > * {
+  flex: 0 0
+    calc((100% - var(--carousel-gap) * (var(--per-view) - 1)) / var(--per-view));
+  scroll-snap-align: start;
+}
+.carousel__arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  background: #fff;
+  border: 1px solid var(--rule);
+  border-radius: 50%;
+  box-shadow: 0 4px 12px rgba(37, 67, 108, 0.15);
+  color: var(--navy);
+  font-size: 20px;
+  transform: translateY(-50%);
+  transition: opacity 0.15s ease;
+}
+.carousel__arrow--prev {
+  left: -22px;
+}
+.carousel__arrow--prev .icon {
+  transform: scaleX(-1);
+}
+.carousel__arrow--next {
+  right: -22px;
+}
+.carousel__arrow:disabled {
+  opacity: 0;
+  pointer-events: none;
+}
+.carousel__dots {
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+}
+/* 24px tap target (WCAG 2.2 target size); the visible dot is drawn by ::before */
+.carousel__dot {
+  display: grid;
+  place-items: center;
+  min-width: 24px;
+  height: 24px;
+  padding: 0;
+  background: none;
+  border: 0;
+}
+.carousel__dot::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--rule-strong);
+  transition:
+    width 0.2s ease,
+    background-color 0.2s ease;
+}
+.carousel__dot[aria-current="true"]::before {
+  width: 24px;
+  background: var(--blue);
+}
+
+/* Review card */
+.review {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  height: 100%;
+  margin: 0;
+  padding: 28px 26px 24px;
+  background: #fff;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 1px 3px rgba(37, 67, 108, 0.08);
+}
+.review__stars {
+  display: flex;
+  gap: 4px;
+  color: var(--amber);
+}
+.review__stars .icon {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+  stroke-width: 1.5;
+}
+.review__title {
+  font: 500 19px/1.3 var(--font-display);
+  color: var(--navy);
+}
+.review__quote {
+  flex: 1;
+  margin: 0;
+  font: 400 16px/1.65 var(--font-body);
+  color: var(--text);
+}
+.review__author {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-top: 16px;
+  border-top: 1px solid var(--rule);
+}
+/* Works for both the placeholder <span> and a real <img> */
+.review__avatar {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--surface-2);
+  border: 1px solid var(--rule-strong);
+  color: var(--muted);
+  object-fit: cover;
+}
+.review__avatar .icon {
+  width: 24px;
+  height: 24px;
+  stroke-width: 1.5;
+}
+.review__who {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.review__name {
+  font: 500 17px/1.3 var(--font-display);
+  color: var(--navy);
+}
+.review__meta {
+  font: 400 13px/1.4 var(--font-ui);
+  color: var(--muted);
+}
+
+@media (max-width: 1024px) {
+  .carousel {
+    --per-view: 2;
+  }
+}
+@media (max-width: 640px) {
+  /* One card with a peek of the next; swipe to browse */
+  .carousel {
+    --per-view: 1.12;
+    --carousel-gap: 16px;
+  }
+  .carousel__arrow {
+    display: none;
+  }
+}
+
+/* =========================================================
+   7. What is a Gold IRA
+   ========================================================= */
 /* Shared "bordered grid" — 1px gaps over a rule-colored background draw the dividers at any column count */
 .ruled-grid {
   display: grid;
@@ -846,7 +1094,7 @@ img.is-missing {
 }
 
 /* =========================================================
-   7. How it works + situation check
+   8. How it works + situation check
    ========================================================= */
 .steps {
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -857,6 +1105,16 @@ img.is-missing {
   flex-direction: column;
   gap: 8px;
   padding: 36px 32px 32px;
+}
+/* Share row tracks across cards (image, step, title, text) so a two-line title
+   in one card doesn't push its text below the text in the others */
+@supports (grid-template-rows: subgrid) {
+  .step {
+    display: grid;
+    grid-row: span 4;
+    grid-template-rows: subgrid;
+    row-gap: 8px;
+  }
 }
 .step__media {
   aspect-ratio: 219 / 160;
@@ -1019,10 +1277,6 @@ img.is-missing {
   color: var(--text-2);
 }
 
-.situation-head {
-  margin-top: clamp(56px, 7vw, 88px);
-}
-
 @media (max-width: 1024px) {
   .steps {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1043,7 +1297,70 @@ img.is-missing {
 }
 
 /* =========================================================
-   8. Ready for a clear next step (blue band)
+   9. Eligible assets
+   ========================================================= */
+.assets {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  border-radius: var(--radius-lg);
+}
+.asset {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 28px 24px;
+  border-top: 3px solid var(--amber);
+}
+/* Align name, spec, and text rows across cards (see .step) */
+@supports (grid-template-rows: subgrid) {
+  .asset {
+    display: grid;
+    grid-row: span 3;
+    grid-template-rows: subgrid;
+    row-gap: 10px;
+  }
+}
+.asset__spec {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--rule);
+  font: 600 11px/1.4 var(--font-ui);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.asset__figure {
+  font: 400 30px/1.1 var(--font-display);
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--amber);
+}
+.asset .card-text {
+  font-size: 15.5px;
+  line-height: 1.6;
+}
+
+@media (max-width: 1024px) {
+  .assets {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  /* 5 cards in 3 columns: let the last one fill the gap in row two */
+  .asset:last-child {
+    grid-column: span 2;
+  }
+}
+@media (max-width: 640px) {
+  .assets {
+    grid-template-columns: 1fr;
+  }
+  .asset:last-child {
+    grid-column: auto;
+  }
+}
+
+/* =========================================================
+   10. Ready for a clear next step (blue band)
    ========================================================= */
 .next-step {
   position: relative;
@@ -1112,27 +1429,8 @@ img.is-missing {
 }
 
 /* =========================================================
-   9. Compare
+   11. Gold IRA vs traditional IRA (comparison table) + how it works / funding (timeline)
    ========================================================= */
-.criteria {
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  margin-bottom: clamp(32px, 4vw, 48px);
-  border-radius: var(--radius-lg);
-}
-.criterion {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 28px 24px;
-}
-.criterion .card-title {
-  margin-top: 4px;
-  font-size: 20px;
-}
-.criterion p:not(.kicker) {
-  font: 400 15.5px/1.6 var(--font-body);
-  color: var(--text-2);
-}
 
 .table-wrap {
   background: #fff;
@@ -1143,6 +1441,7 @@ img.is-missing {
 .compare-table {
   width: 100%;
   min-width: 620px;
+  table-layout: fixed; /* label column is 22%, data columns split the rest evenly */
   border-collapse: collapse;
   text-align: left;
 }
@@ -1182,22 +1481,177 @@ img.is-missing {
   background: rgba(245, 165, 36, 0.07);
 }
 
-@media (max-width: 1024px) {
-  .criteria {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+/* "How does Gold IRA money work" — numbered timeline, horizontal on desktop */
+.process {
+  --num-size: 44px;
+  --process-gap: 32px;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--process-gap);
+}
+.process--4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.process__step {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+/* Connector from this step's circle to the next one */
+.process__step:not(:last-child)::before {
+  content: "";
+  position: absolute;
+  top: calc(var(--num-size) / 2 - 1px);
+  left: calc(var(--num-size) + 8px);
+  right: calc(8px - var(--process-gap));
+  height: 2px;
+  background: var(--rule-strong);
+}
+.process__num {
+  display: grid;
+  place-items: center;
+  width: var(--num-size);
+  height: var(--num-size);
+  margin-bottom: 8px;
+  border-radius: 50%;
+  background: var(--navy);
+  font: 500 18px/1 var(--font-display);
+  color: #fff;
+}
+.process .card-text {
+  font-size: 15.5px;
+  line-height: 1.6;
+}
+/* Align number, title, and text rows across steps (see .step) */
+@supports (grid-template-rows: subgrid) {
+  .process__step {
+    display: grid;
+    grid-row: span 3;
+    grid-template-rows: subgrid;
+    row-gap: 10px;
   }
 }
-@media (max-width: 640px) {
-  .criteria {
-    grid-template-columns: 1fr;
+@media (max-width: 1024px) {
+  /* Vertical timeline: number in a left rail, line runs down to the next step */
+  .process {
+    --process-gap: 28px;
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 680px;
+    margin-inline: auto;
   }
-  .criterion {
-    padding: 22px 20px;
+  .process__step {
+    display: grid;
+    grid-row: auto;
+    grid-template-rows: none;
+    grid-template-columns: var(--num-size) minmax(0, 1fr);
+    column-gap: 20px;
+    row-gap: 6px;
+  }
+  .process__step > :not(.process__num) {
+    grid-column: 2;
+  }
+  .process__num {
+    grid-row: 1 / span 2;
+    margin-bottom: 0;
+  }
+  .process__step:not(:last-child)::before {
+    top: calc(var(--num-size) + 8px);
+    bottom: calc(8px - var(--process-gap));
+    left: calc(var(--num-size) / 2 - 1px);
+    right: auto;
+    width: 2px;
+    height: auto;
   }
 }
 
 /* =========================================================
-   10. Why Gold IRA Blueprint
+   12. Long-form guide content: step lists, fact lists, notes
+   Shared by the content-brief sections (funding, essentials,
+   custodian services, monitoring, beneficiaries)
+   ========================================================= */
+.section-title--sm {
+  font-size: clamp(24px, 2.6vw, 30px);
+}
+
+/* Numbered steps in a single reading column; works for any count */
+.step-list {
+  max-width: 900px;
+  margin-inline: auto;
+  border-top: 1px solid var(--rule);
+}
+.step-list__item {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr);
+  column-gap: 20px;
+  row-gap: 6px;
+  padding-block: 22px;
+  border-bottom: 1px solid var(--rule);
+}
+.step-list__num {
+  grid-row: 1 / span 2;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--navy);
+  font: 500 17px/1 var(--font-display);
+  color: #fff;
+}
+.step-list__title {
+  grid-column: 2;
+  font: 500 20px/1.3 var(--font-display);
+  color: var(--navy);
+}
+.step-list__text {
+  grid-column: 2;
+  font: 400 16.5px/1.7 var(--font-body);
+  color: var(--text);
+}
+
+/* "Term: explanation" bullets as a two-column definition list */
+.fact-list {
+  max-width: 900px;
+  margin: 0 auto;
+  border-top: 1px solid var(--rule);
+}
+.fact-list__row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2.4fr);
+  gap: 6px 32px;
+  padding-block: 20px;
+  border-bottom: 1px solid var(--rule);
+}
+.fact-list dt {
+  font: 500 18px/1.4 var(--font-display);
+  color: var(--navy);
+}
+.fact-list dd {
+  margin: 0;
+  font: 400 16.5px/1.7 var(--font-body);
+  color: var(--text);
+}
+
+/* Closing paragraph after a list */
+.block-note {
+  max-width: 900px;
+  margin: 28px auto 0;
+  font: 400 17px/1.7 var(--font-body);
+  color: var(--text-2);
+}
+
+@media (max-width: 640px) {
+  .fact-list__row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .step-list__item {
+    column-gap: 16px;
+  }
+}
+
+/* =========================================================
+   13. Why Gold IRA Blueprint
    ========================================================= */
 .trust {
   display: flex;
@@ -1267,7 +1721,7 @@ img.is-missing {
 }
 
 /* =========================================================
-   11. Portfolio protection (dark split)
+   14. Portfolio protection (dark split)
    ========================================================= */
 .protection {
   background: var(--ink);
@@ -1345,7 +1799,7 @@ img.is-missing {
 }
 
 /* =========================================================
-   12. Knowledge base
+   15. Knowledge base
    ========================================================= */
 .kb-head {
   margin-bottom: 44px;
@@ -1532,7 +1986,7 @@ img.is-missing {
 }
 
 /* =========================================================
-   13. Free guide
+   16. Free guide
    ========================================================= */
 .guide {
   display: flex;
@@ -1616,7 +2070,7 @@ img.is-missing {
 }
 
 /* =========================================================
-   14. FAQ
+   17. FAQ
    ========================================================= */
 .faq {
   max-width: 900px;
@@ -1707,7 +2161,7 @@ img.is-missing {
 }
 
 /* =========================================================
-   15. Team
+   18. Team
    ========================================================= */
 .team {
   display: grid;
@@ -1759,7 +2213,7 @@ img.is-missing {
 }
 
 /* =========================================================
-   16. Footer + policy dialog
+   19. Footer + policy dialog
    ========================================================= */
 .site-footer {
   background: var(--navy);
@@ -1798,11 +2252,12 @@ img.is-missing {
 .footer-links {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  align-items: flex-start;
 }
 .footer-links a,
 .footer-links button {
-  padding: 0;
+  display: inline-block;
+  padding: 4px 0; /* 29px tap target, same visual rhythm as the old 8px gap */
   background: none;
   border: 0;
   font: 400 15px/1.4 var(--font-ui);

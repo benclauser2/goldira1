@@ -10,9 +10,20 @@
     return el;
   };
 
+  const prefersReducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const scrollBehavior = () => (prefersReducedMotion() ? 'auto' : 'smooth');
+
+  // Position of a horizontally scrollable element: does it overflow, and is it at either end?
+  const scrollEdges = (el) => ({
+    overflow: el.scrollWidth > el.clientWidth + 1,
+    atStart: el.scrollLeft <= 1,
+    atEnd: el.scrollLeft + el.clientWidth >= el.scrollWidth - 1
+  });
+
   const HEADER_SOLID_OFFSET = 40; // px scrolled before the header gets its solid background
   const DESKTOP_NAV_QUERY = '(min-width: 901px)'; // keep in sync with the 900px nav breakpoint in styles.css
   const RESIZE_DEBOUNCE_MS = 150;
+  const CAROUSEL_MAX_DOTS = 10; // beyond this, dots are noise; arrows and swipe still work
 
   /* ---------- Header: solid after scrolling, mobile menu ---------- */
   function initHeader() {
@@ -56,80 +67,34 @@
     });
   }
 
-  /* ---------- Hero readiness quiz ---------- */
-  // Q1 is from the Figma design. Q2–Q4 are placeholders — replace with the client's real questions.
-  const QUIZ = [
-    { id: 'money', q: 'Where is most of your retirement money today?', options: [['401k', '401(k) or workplace plan'], ['ira', 'Traditional / Roth IRA'], ['cash', 'Taxable cash / brokerage']] },
-    { id: 'amount', q: 'Roughly how much are you thinking of moving?', options: [['lt50', 'Under $50,000'], ['50-150', '$50,000 – $150,000'], ['gt150', 'Over $150,000']] },
-    { id: 'timeline', q: 'When do you plan to retire?', options: [['retired', "I'm already retired"], ['lt5', 'Within 5 years'], ['gt5', '5+ years from now']] },
-    { id: 'goal', q: 'What matters most to you right now?', options: [['protect', 'Protecting what I have'], ['diversify', 'Diversifying my portfolio'], ['learn', 'Just learning, for now']] }
-  ];
-
-  function createQuizOption(value, label, checked) {
-    const dot = createEl('span', { className: 'quiz-option__dot' });
-    dot.setAttribute('aria-hidden', 'true');
-    return createEl('label', { className: 'quiz-option' }, [
-      createEl('input', { type: 'radio', name: 'q', value, checked }),
-      createEl('span', { textContent: label }),
-      dot
-    ]);
+  /* ---------- Hero growth calculator ---------- */
+  // Future value of a monthly contribution, compounded monthly, deposited at the end of each month
+  function futureValue(monthly, years, annualRatePct) {
+    const months = years * 12;
+    const monthlyRate = annualRatePct / 100 / 12;
+    if (monthlyRate === 0) return monthly * months;
+    return monthly * ((1 + monthlyRate) ** months - 1) / monthlyRate;
   }
 
-  function initQuiz() {
-    const form = $('#quiz-form');
-    const lead = $('#quiz-lead');
-    const options = $('#quiz-options');
-    const back = $('#quiz-back');
-    if (!form || !lead || !options || !back) return;
-
-    const answers = {};
-    let step = 0;
-    const isLastStep = () => step === QUIZ.length - 1;
+  function initGrowthCalc() {
+    const form = $('#growth-calc');
+    if (!form) return;
+    const { monthly, years, rate } = form.elements;
+    const usd = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
 
     const render = () => {
-      const item = QUIZ[step];
-      $('#quiz-step').textContent = `${step + 1} of ${QUIZ.length}`;
-      $('#quiz-bar').style.width = `${((step + 1) / QUIZ.length) * 100}%`;
-      $('#quiz-question').textContent = item.q;
-      $('#quiz-next').textContent = isLastStep() ? 'See my result' : 'Continue';
-      back.hidden = step === 0;
-
-      const saved = answers[item.id];
-      options.replaceChildren(...item.options.map(([value, label], i) =>
-        createQuizOption(value, label, saved ? saved === value : i === 0)
-      ));
+      const m = Number(monthly.value);
+      const y = Number(years.value);
+      const r = Number(rate.value);
+      $('#calc-monthly-out').textContent = `${usd.format(m)}/mo`;
+      $('#calc-years-out').textContent = `${y} ${y === 1 ? 'year' : 'years'}`;
+      $('#calc-rate-out').textContent = `${r.toFixed(1)}%`;
+      $('#calc-balance').textContent = usd.format(futureValue(m, y, r));
+      $('#calc-contributed').textContent = usd.format(m * y * 12);
     };
 
-    const saveAnswer = () => {
-      answers[QUIZ[step].id] = new FormData(form).get('q');
-    };
-
-    const showLead = () => {
-      form.hidden = true;
-      $('#quiz-foot').hidden = true;
-      lead.hidden = false;
-      lead.elements.quiz_answers.value = JSON.stringify(answers);
-      $('#quiz-lead-title').focus();
-    };
-
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      saveAnswer();
-      if (isLastStep()) {
-        showLead();
-        return;
-      }
-      step += 1;
-      render();
-      $('input:checked', options)?.focus();
-    });
-    back.addEventListener('click', () => {
-      saveAnswer();
-      step -= 1;
-      render();
-    });
-    $('#quiz-skip')?.addEventListener('click', showLead);
-
+    form.addEventListener('input', render);
+    form.addEventListener('submit', (e) => e.preventDefault());
     render();
   }
 
@@ -178,7 +143,7 @@
     render();
   }
 
-  /* ---------- Lead forms (quiz, next step, guide, footer) ---------- */
+  /* ---------- Lead forms (next step, guide, footer) ---------- */
   // TODO: send to the real endpoint (e.g. GHL webhook) — POST `payload` as JSON and throw on a non-OK response.
   async function submitLead(payload) {
     console.info('[lead]', payload);
@@ -307,21 +272,133 @@
     if (!prev || !next) return;
 
     const updateArrows = () => {
-      const overflow = tablist.scrollWidth > tablist.clientWidth + 1;
-      const atStart = tablist.scrollLeft <= 1;
-      const atEnd = tablist.scrollLeft + tablist.clientWidth >= tablist.scrollWidth - 1;
+      const { overflow, atStart, atEnd } = scrollEdges(tablist);
       next.hidden = !overflow;
       next.disabled = atEnd;
       prev.hidden = !overflow || atStart;
     };
     const scrollTabs = (direction) => {
-      tablist.scrollBy({ left: direction * tablist.clientWidth * 0.6, behavior: 'smooth' });
+      tablist.scrollBy({ left: direction * tablist.clientWidth * 0.6, behavior: scrollBehavior() });
     };
 
     next.addEventListener('click', () => scrollTabs(1));
     prev.addEventListener('click', () => scrollTabs(-1));
     tablist.addEventListener('scroll', updateArrows, { passive: true });
     new ResizeObserver(updateArrows).observe(tablist);
+  }
+
+  /* ---------- Reviews: rating summary, category filter, carousel ---------- */
+  // Average and count come from the cards' data-rating, so the summary always matches what's published
+  function renderRatingSummary(items) {
+    const average = $('#reviews-average');
+    const total = $('#reviews-total');
+    const ratings = items
+      .map((item) => Number(item.dataset.rating))
+      .filter((rating) => rating >= 1 && rating <= 5);
+    if (!average || !total || !ratings.length) return;
+
+    const mean = ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length;
+    average.textContent = `${mean.toFixed(1)} out of 5`;
+    total.textContent = ratings.length;
+  }
+
+  // Scroll-snap carousel: arrows step a page, dots jump to a page. Returns { reset } for re-layout after filtering.
+  function initCarousel(track, prev, next, dotsEl) {
+    if (!prev || !next || !dotsEl) return null;
+    let dots = [];
+
+    const slides = () => [...track.children].filter((slide) => !slide.hidden);
+    const perView = () => {
+      const first = slides()[0];
+      return first ? Math.max(1, Math.floor((track.clientWidth + 1) / first.offsetWidth)) : 1;
+    };
+    const pageCount = () => Math.ceil(slides().length / perView());
+
+    const currentPage = () => {
+      const visible = slides();
+      if (!visible.length) return 0;
+      if (scrollEdges(track).atEnd) return pageCount() - 1;
+      const origin = visible[0].offsetLeft;
+      const index = visible.findIndex((slide) => slide.offsetLeft - origin >= track.scrollLeft - 2);
+      return Math.floor(Math.max(index, 0) / perView());
+    };
+
+    const goTo = (page) => {
+      const visible = slides();
+      const target = visible[Math.min(Math.max(page, 0), pageCount() - 1) * perView()];
+      if (!target) return;
+      track.scrollTo({ left: target.offsetLeft - visible[0].offsetLeft, behavior: scrollBehavior() });
+    };
+
+    const update = () => {
+      const { overflow, atStart, atEnd } = scrollEdges(track);
+      prev.disabled = !overflow || atStart;
+      next.disabled = !overflow || atEnd;
+      const current = currentPage();
+      dots.forEach((dot, i) => dot.setAttribute('aria-current', String(i === current)));
+    };
+
+    const renderDots = (force = false) => {
+      const count = pageCount();
+      if (!force && count === dots.length) {
+        update();
+        return;
+      }
+      dots = Array.from({ length: count }, (_, i) => {
+        const dot = createEl('button', { type: 'button', className: 'carousel__dot' });
+        dot.setAttribute('aria-label', `Page ${i + 1} of ${count}`);
+        dot.addEventListener('click', () => goTo(i));
+        return dot;
+      });
+      dotsEl.replaceChildren(...dots);
+      dotsEl.hidden = count <= 1 || count > CAROUSEL_MAX_DOTS;
+      update();
+    };
+
+    prev.addEventListener('click', () => goTo(currentPage() - 1));
+    next.addEventListener('click', () => goTo(currentPage() + 1));
+    track.addEventListener('scroll', update, { passive: true });
+    new ResizeObserver(() => renderDots()).observe(track);
+    renderDots(true);
+
+    return {
+      reset() {
+        track.scrollTo({ left: 0 });
+        renderDots(true);
+      }
+    };
+  }
+
+  function initReviews() {
+    const track = $('#reviews-track');
+    if (!track) return;
+    const items = $$('.reviews__item', track);
+    const chips = $$('.review-filter [data-filter]');
+    const status = $('#reviews-status');
+
+    renderRatingSummary(items);
+    const carousel = initCarousel(track, $('#reviews-prev'), $('#reviews-next'), $('#reviews-dots'));
+
+    const matches = (item, filter) => filter === 'all' || item.dataset.category === filter;
+
+    const applyFilter = (active) => {
+      const filter = active.dataset.filter;
+      chips.forEach((chip) => chip.setAttribute('aria-pressed', String(chip === active)));
+      let shown = 0;
+      items.forEach((item) => {
+        item.hidden = !matches(item, filter);
+        if (!item.hidden) shown += 1;
+      });
+      if (status) status.textContent = `Showing ${shown} of ${items.length} reviews`;
+      carousel?.reset();
+    };
+
+    chips.forEach((chip) => {
+      const count = items.filter((item) => matches(item, chip.dataset.filter)).length;
+      chip.append(` (${count})`);
+      chip.disabled = count === 0;
+      chip.addEventListener('click', () => applyFilter(chip));
+    });
   }
 
   /* ---------- Read more (expands clamped text in place) ---------- */
@@ -401,8 +478,7 @@
   /* ---------- Hero stats: count up from 0 ---------- */
   function initStatCounters() {
     const stats = $('.hero__stats');
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (!stats || reduceMotion || !('IntersectionObserver' in window)) return;
+    if (!stats || prefersReducedMotion() || !('IntersectionObserver' in window)) return;
 
     const DURATION_MS = 1600;
     const format = new Intl.NumberFormat('en-US');
@@ -453,8 +529,9 @@
   }
 
   initHeader();
-  initQuiz();
+  initGrowthCalc();
   initSituation();
+  initReviews();
   initLeadForms();
   initKnowledgeBase();
   initReadMore();
