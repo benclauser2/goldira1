@@ -1740,12 +1740,260 @@ img.is-missing {
   color: var(--text-2);
 }
 
+/* "Understanding Gold IRA Money" guide: full-width bands (navy, white, grey)
+   with content held to a 900px reading column */
+.money-guide {
+  background: var(--surface);
+}
+.money-guide__inner {
+  position: relative;
+  width: 100%;
+  max-width: calc(900px + var(--gutter) * 2);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+.money-guide__hero {
+  padding-block: clamp(56px, 7vw, 88px);
+  overflow: hidden;
+  isolation: isolate;
+  background: radial-gradient(
+    120% 160% at 15% -20%,
+    var(--navy) 0%,
+    var(--ink) 70%
+  );
+  color: #fff;
+}
+/* Two concentric gold rings at the top-right of the content column */
+.money-guide__hero .money-guide__inner::before,
+.money-guide__hero .money-guide__inner::after {
+  content: "";
+  position: absolute;
+  border: 1px solid rgba(251, 191, 36, 0.25);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: -1;
+}
+.money-guide__hero .money-guide__inner::before {
+  top: -120px;
+  right: -40px;
+  width: 260px;
+  height: 260px;
+}
+.money-guide__hero .money-guide__inner::after {
+  top: -200px;
+  right: -120px;
+  width: 420px;
+  height: 420px;
+}
+.money-guide__mark {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  margin-bottom: 28px;
+  border: 1px solid var(--gold);
+  border-radius: 50%;
+}
+.money-guide__mark::after {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--gold);
+}
+.money-guide__title {
+  margin-bottom: 16px;
+  font: 500 clamp(28px, 3.4vw, 38px)/1.2 var(--font-display);
+  color: #fff;
+  text-wrap: balance;
+}
+.money-guide__intro {
+  max-width: 36em;
+  font: 400 17px/1.7 var(--font-body);
+  color: rgba(255, 255, 255, 0.8);
+}
+.money-guide__body {
+  display: grid;
+  gap: clamp(48px, 6vw, 64px);
+  padding-block: clamp(56px, 7vw, 88px);
+}
+.money-guide__lede {
+  padding-left: 22px;
+  border-left: 3px solid var(--amber);
+  font: italic 400 clamp(19px, 2vw, 21px)/1.6 var(--font-display);
+  color: var(--navy);
+}
+.money-guide__block-title {
+  margin-bottom: 8px;
+  font: 500 clamp(24px, 2.6vw, 30px)/1.25 var(--font-display);
+  color: var(--navy);
+}
+.money-guide__block-intro {
+  max-width: 40em;
+  margin-bottom: 28px;
+  font: 400 17px/1.7 var(--font-body);
+  color: var(--text-2);
+}
+.money-guide__ledger {
+  border-top: 1px solid var(--rule);
+}
+.money-guide__row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: 8px 28px;
+  padding-block: 24px;
+  border-bottom: 1px solid var(--rule);
+}
+.money-guide__row dt {
+  font: italic 500 18px/1.4 var(--font-display);
+  color: var(--amber);
+}
+.money-guide__row dd {
+  margin: 0;
+  font: 400 16.5px/1.7 var(--font-body);
+  color: var(--text);
+}
+/* Vertical gold line with a ring marking each stage */
+.money-guide__flow {
+  position: relative;
+  display: grid;
+  gap: 36px;
+  padding-left: 34px;
+}
+.money-guide__flow::before {
+  content: "";
+  position: absolute;
+  top: 8px;
+  bottom: 8px;
+  left: 6px;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--amber), var(--rule) 92%);
+}
+.money-guide__stage {
+  position: relative;
+  font: 400 16.5px/1.7 var(--font-body);
+  color: var(--text-2);
+}
+.money-guide__stage::before {
+  content: "";
+  position: absolute;
+  top: 6px;
+  left: -34px;
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--amber);
+  border-radius: 50%;
+  background: var(--surface);
+}
+.money-guide__stage-title {
+  margin-bottom: 8px;
+  font: 500 20px/1.3 var(--font-display);
+  color: var(--navy);
+}
+.money-guide__callout {
+  margin-top: 40px;
+  padding: 24px 28px;
+  border-left: 3px solid var(--navy);
+  border-radius: var(--radius-md);
+  background: var(--cream);
+  font: 400 16.5px/1.7 var(--font-body);
+  color: var(--text);
+}
+.money-guide__callout-label {
+  margin-bottom: 6px;
+  font: italic 500 17px/1.4 var(--font-display);
+  color: var(--navy);
+}
+/* Mirrored band: glow and rings on the left */
+.money-guide--mirror .money-guide__hero {
+  background: radial-gradient(
+    120% 160% at 85% -20%,
+    var(--navy) 0%,
+    var(--ink) 70%
+  );
+}
+.money-guide--mirror .money-guide__hero .money-guide__inner::before,
+.money-guide--mirror .money-guide__hero .money-guide__inner::after {
+  right: auto;
+}
+.money-guide--mirror .money-guide__hero .money-guide__inner::before {
+  left: -40px;
+}
+.money-guide--mirror .money-guide__hero .money-guide__inner::after {
+  left: -120px;
+}
+/* Question above its answer, for rows with longer or nested answers */
+.money-guide__row--stacked {
+  grid-template-columns: minmax(0, 1fr);
+}
+.money-guide__row dd > * + * {
+  margin-top: 20px;
+}
+/* Follow-up question nested under an answer */
+.money-guide__sub {
+  padding-left: 22px;
+  border-left: 2px solid var(--rule-warm);
+  color: var(--text-2);
+}
+.money-guide__sub-title {
+  margin-bottom: 6px;
+  font: italic 500 17px/1.4 var(--font-display);
+  color: var(--navy);
+}
+/* Topic index: two columns, the last topic spans both */
+.money-guide__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border-top: 1px solid var(--rule);
+  border-left: 1px solid var(--rule);
+}
+.money-guide__cell {
+  padding: 28px 26px;
+  border-right: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  font: 400 16px/1.7 var(--font-body);
+  color: var(--text-2);
+}
+.money-guide__cell--wide {
+  grid-column: 1 / -1;
+  background: var(--hover-warm);
+}
+.money-guide__tag {
+  margin-bottom: 10px;
+  font: 600 12px/1.4 var(--font-ui);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--amber);
+}
+.money-guide__cell-title {
+  margin-bottom: 10px;
+  font: 500 19px/1.35 var(--font-display);
+  color: var(--navy);
+}
+.money-guide__footer {
+  padding-block: 28px;
+  border-block: 1px solid var(--rule);
+  background: var(--page);
+  font: 400 14px/1.7 var(--font-ui);
+  color: var(--text-2);
+}
+
 @media (max-width: 640px) {
-  .fact-list__row {
+  .fact-list__row,
+  .money-guide__row {
     grid-template-columns: minmax(0, 1fr);
   }
   .step-list__item {
     column-gap: 16px;
+  }
+  .money-guide__lede {
+    padding-left: 16px;
+  }
+  .money-guide__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .money-guide__cell {
+    padding: 24px 20px;
   }
 }
 
