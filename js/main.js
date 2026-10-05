@@ -102,9 +102,9 @@
   /* ---------- Situation checker ---------- */
   const SUGGESTIONS = {
     rollover: { title: 'Map the rollover path', text: 'Custodian → dealer → depository before funds move.', href: '#kb-rollover', link: 'How IRA money moves into gold ↓' },
-    // The three below are written from the page's own copy — confirm wording with the client.
-    fees: { title: 'Get the full fee stack', text: 'Setup, annual, storage, and metal premiums — ask for all of it in writing.', href: '#compare', link: 'How we compare companies ↓' },
-    shortlist: { title: 'Compare on the same five points', text: 'Fees, spreads, buyback, minimums, and storage — not signup bonuses.', href: '#compare', link: 'See the criteria ↓' },
+    // The three below are written from the page's own copy; confirm wording with the client.
+    fees: { title: 'Get the full fee stack', text: 'Setup, annual, storage, and metal premiums. Ask for all of it in writing.', href: '#compare', link: 'How we compare companies ↓' },
+    shortlist: { title: 'Compare on the same five points', text: 'Fees, spreads, buyback, minimums, and storage, not signup bonuses.', href: '#compare', link: 'See the criteria ↓' },
     metals: { title: 'Check purity and eligibility', text: 'Most gold bullion must be .995+ fine, with specific coin exceptions.', href: '#kb-purity', link: 'What purity is required ↓' }
   };
 
@@ -145,7 +145,7 @@
   }
 
   /* ---------- Lead forms (next step, guide, footer) ---------- */
-  // TODO: send to the real endpoint (e.g. GHL webhook) — POST `payload` as JSON and throw on a non-OK response.
+  // TODO: send to the real endpoint (e.g. GHL webhook): POST `payload` as JSON and throw on a non-OK response.
   async function submitLead(payload) {
     console.info('[lead]', payload);
   }
@@ -590,6 +590,37 @@
     });
   }
 
+  // Hero stat tooltips: hover and focus are pure CSS; tap toggles aria-expanded, Esc or an outside tap closes
+  function initStatTips() {
+    const buttons = $$('.stat-tip__btn');
+    if (!buttons.length) return;
+
+    const closeAll = (except) => buttons.forEach((btn) => {
+      if (btn !== except) btn.setAttribute('aria-expanded', 'false');
+    });
+
+    buttons.forEach((btn) => btn.addEventListener('click', () => {
+      const open = btn.getAttribute('aria-expanded') !== 'true';
+      closeAll(btn);
+      btn.closest('.stat-tip').classList.remove('is-dismissed');
+      btn.setAttribute('aria-expanded', String(open));
+    }));
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.stat-tip')) closeAll();
+    });
+    // Esc also hides a tip held open by hover or focus, until the pointer or focus leaves it
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== 'Escape') return;
+      closeAll();
+      $$('.stat-tip').forEach((tip) => tip.classList.add('is-dismissed'));
+    });
+    $$('.stat-tip').forEach((tip) => {
+      const reset = () => tip.classList.remove('is-dismissed');
+      tip.addEventListener('mouseleave', reset);
+      tip.addEventListener('focusout', reset);
+    });
+  }
+
   function initFooterYear() {
     const year = $('#year');
     if (year) year.textContent = new Date().getFullYear();
@@ -606,5 +637,6 @@
   initPolicies();
   initImageFallbacks();
   initStatCounters();
+  initStatTips();
   initFooterYear();
 })();

@@ -670,6 +670,87 @@ img.is-missing {
   color: rgba(255, 255, 255, 0.62);
 }
 
+/* Stat info tooltips: shown on hover, keyboard focus, or tap (JS sets aria-expanded) */
+.hero__stats li {
+  position: relative;
+}
+.hero__stats .stat-tip {
+  align-self: center;
+  display: flex;
+}
+.stat-tip__btn {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  margin-left: -4px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.62);
+  cursor: help;
+  transition: color 0.15s ease;
+}
+.stat-tip__btn:hover,
+.stat-tip__btn:focus-visible,
+.stat-tip__btn[aria-expanded="true"] {
+  color: var(--gold);
+}
+.stat-tip__btn:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 1px;
+}
+.hero__stats .stat-tip__bubble {
+  position: absolute;
+  bottom: calc(100% + 12px);
+  left: 0;
+  z-index: 5;
+  width: max-content;
+  max-width: min(280px, calc(100vw - var(--gutter) * 2));
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  box-shadow: 0 10px 28px rgba(18, 31, 58, 0.28);
+  font: 400 13px/1.5 var(--font-ui);
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--text);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(4px);
+  transition:
+    opacity 0.15s ease,
+    transform 0.15s ease,
+    visibility 0.15s;
+}
+/* Invisible bridge over the gap so the pointer can move onto the bubble */
+.hero__stats .stat-tip__bubble::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  right: 0;
+  left: 0;
+  height: 12px;
+}
+.stat-tip:hover .stat-tip__bubble,
+.stat-tip__btn:focus-visible + .stat-tip__bubble,
+.stat-tip__btn[aria-expanded="true"] + .stat-tip__bubble {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+.stat-tip.is-dismissed .stat-tip__bubble {
+  opacity: 0;
+  visibility: hidden;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero__stats .stat-tip__bubble {
+    transition: none;
+  }
+}
+
 .calc {
   flex: none;
   display: flex;
@@ -1133,7 +1214,7 @@ img.is-missing {
 /* =========================================================
    7. What is a Gold IRA
    ========================================================= */
-/* Shared "bordered grid" — 1px gaps over a rule-colored background draw the dividers at any column count */
+/* Shared "bordered grid": 1px gaps over a rule-colored background draw the dividers at any column count */
 .ruled-grid {
   display: grid;
   gap: 1px;
@@ -1580,7 +1661,7 @@ img.is-missing {
   background: rgba(245, 165, 36, 0.07);
 }
 
-/* "How does Gold IRA money work" — numbered timeline, horizontal on desktop */
+/* "How does Gold IRA money work": numbered timeline, horizontal on desktop */
 .process {
   --num-size: 44px;
   --process-gap: 32px;
